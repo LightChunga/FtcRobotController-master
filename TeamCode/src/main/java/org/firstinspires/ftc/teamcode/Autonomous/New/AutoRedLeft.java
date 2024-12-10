@@ -152,13 +152,13 @@ public class AutoRedLeft extends LinearOpMode {
         //drive.followTrajectorySequence(towall);
 
         RaiseArm(80);
-        sleep(8000);
-        //servospate.setPosition(0);
-        /*sleep(200);
+        //sleep(8000);
+        servospate.setPosition(0);
+        sleep(200);
         LowerArm(29);
 
         drive.followTrajectorySequence(firstcube);
         drive.followTrajectorySequence(secondcube);
-        drive.followTrajectorySequence(thirdcube);*/
+        drive.followTrajectorySequence(thirdcube);
     }
 }
