@@ -128,7 +128,7 @@ public class teleopk extends LinearOpMode {
             if(sb1 && !sb2){
                 servospate.setPosition(0.0); //open
             } else if(!sb1 && sb2){
-                servospate.setPosition(0.3); //close
+                servospate.setPosition(0.1); //close
             }
             if(a1 && !b1){
                 claw2.setPosition(0.0);

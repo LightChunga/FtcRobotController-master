@@ -95,7 +95,7 @@ public class AutoRedLeft extends LinearOpMode {
         sliderleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        servospate.setPosition(0.3);
+        servospate.setPosition(0.1);
 
         waitForStart();
 
@@ -153,5 +153,7 @@ public class AutoRedLeft extends LinearOpMode {
         LowerArm(29);
 
         drive.followTrajectorySequence(firstcube);
+        drive.followTrajectorySequence(secondcube);
+        drive.followTrajectorySequence(thirdcube);
     }
 }
