@@ -24,7 +24,7 @@ public class AutoRedLeft extends LinearOpMode {
     DcMotorEx encoder_arm = null;
 
     //ToDo: tune this later
-    final double pcm = 68;
+    final double pcm = 72;
     final double rp = Math.sqrt(6) - Math.sqrt(2);
     final double L0 = 29;
     public void RaiseArm(double h0) {
@@ -86,6 +86,7 @@ public class AutoRedLeft extends LinearOpMode {
         encoder_arm = hardwareMap.get(DcMotorEx.class, "armencoder");
 
         encoder_arm.setDirection(DcMotorSimple.Direction.REVERSE);
+        encoder_arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sliderright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -96,6 +97,9 @@ public class AutoRedLeft extends LinearOpMode {
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         servospate.setPosition(0.1);
+
+        telemetry.addData("Init encoder position: ", -encoder_arm.getCurrentPosition());
+        telemetry.update();
 
         waitForStart();
 
@@ -143,17 +147,18 @@ public class AutoRedLeft extends LinearOpMode {
                 .build();
 
 
-        drive.setPoseEstimate(towall.start());
+        //drive.setPoseEstimate(towall.start());
 
-        drive.followTrajectorySequence(towall);
+        //drive.followTrajectorySequence(towall);
 
         RaiseArm(80);
-        servospate.setPosition(0);
-        sleep(200);
+        sleep(8000);
+        //servospate.setPosition(0);
+        /*sleep(200);
         LowerArm(29);
 
         drive.followTrajectorySequence(firstcube);
         drive.followTrajectorySequence(secondcube);
-        drive.followTrajectorySequence(thirdcube);
+        drive.followTrajectorySequence(thirdcube);*/
     }
 }
