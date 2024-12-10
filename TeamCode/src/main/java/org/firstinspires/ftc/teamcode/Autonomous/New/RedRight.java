@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.New.Util.Utils;
 
 
 @Autonomous
-public class AutoRedLeft extends LinearOpMode {
+public class RedRight extends LinearOpMode {
 
     ServoImplEx servospate = null;
     DcMotorEx sliderleft = null;
