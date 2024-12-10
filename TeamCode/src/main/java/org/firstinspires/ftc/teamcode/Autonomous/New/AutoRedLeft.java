@@ -103,7 +103,7 @@ public class AutoRedLeft extends LinearOpMode {
 
         //ToDo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
-                .lineToConstantHeading(new Vector2d(0.00, -38.40))
+                .lineToConstantHeading(new Vector2d(-8.0, -38.40))
                 .build();
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(towall.end())
