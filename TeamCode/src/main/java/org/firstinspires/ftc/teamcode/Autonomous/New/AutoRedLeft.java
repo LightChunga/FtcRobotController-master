@@ -109,7 +109,21 @@ public class AutoRedLeft extends LinearOpMode {
         TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -38.40, Math.toRadians(270.00)))
                 .splineTo(new Vector2d(-37.77, -40.80), Math.toRadians(90.00))
                 .splineTo(new Vector2d(-47.45, -9.75), Math.toRadians(180.00))
-                .lineTo(new Vector2d(-47.74, -59.43))
+                .lineTo(new Vector2d(-48, -60))
+                .build();
+
+        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(firstcube.end())
+                .splineToConstantHeading(new Vector2d(-47.88, -9.60), Math.toRadians(180.00))
+                .splineTo(new Vector2d(-56.55, -9.32), Math.toRadians(179.24))
+                .lineToConstantHeading(new Vector2d(-58, -60))
+                .build();
+
+        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-58.00, -60.00, Math.toRadians(180.00)))
+                .lineToConstantHeading(new Vector2d(-50.91, -29.39))
+                .lineToConstantHeading(new Vector2d(-62.61, -9.60))
+                .lineToConstantHeading(new Vector2d(-61.89, -58.28))
+                .lineToConstantHeading(new Vector2d(-41.52, -40.08))
+                .splineToConstantHeading(new Vector2d(-27.51, -11.77), Math.toRadians(0.00))
                 .build();
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(towall.end())
