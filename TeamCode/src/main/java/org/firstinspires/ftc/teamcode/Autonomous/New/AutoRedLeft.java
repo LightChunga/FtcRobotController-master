@@ -72,6 +72,7 @@ public class AutoRedLeft extends LinearOpMode {
         sliderright.setPower(0);
         sliderleft.setPower(0);
     }
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -124,11 +125,12 @@ public class AutoRedLeft extends LinearOpMode {
 
         TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-58.00, -60.00, Math.toRadians(180.00)))
                 .lineToConstantHeading(new Vector2d(-50.91, -29.39))
-                .lineToConstantHeading(new Vector2d(-62.61, -9.60))
-                .lineToConstantHeading(new Vector2d(-61.89, -58.28))
+                .lineToConstantHeading(new Vector2d(-61.46, -9.89))
+                .lineToConstantHeading(new Vector2d(-61.75, -59.29))
                 .lineToConstantHeading(new Vector2d(-41.52, -40.08))
                 .splineToConstantHeading(new Vector2d(-27.51, -11.77), Math.toRadians(0.00))
                 .build();
+
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(towall.end())
                 .lineToConstantHeading(new Vector2d(-38.36, -8.87))
