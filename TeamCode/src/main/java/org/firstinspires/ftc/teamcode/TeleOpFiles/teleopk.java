@@ -126,9 +126,9 @@ public class teleopk extends LinearOpMode {
             rightDrive.setPower(Range.clip(y + x+z, -1, 1));
 
             if(sb1 && !sb2){
-                servospate.setPosition(0.0); //open
+                servospate.setPosition(-0.08); //open
             } else if(!sb1 && sb2){
-                servospate.setPosition(0.1); //close
+                servospate.setPosition(0.12); //close
             }
             if(a1 && !b1){
                 claw2.setPosition(0.0);
@@ -162,12 +162,12 @@ public class teleopk extends LinearOpMode {
                 actuator.setPower(0);
 
             if(up>0 && down == 0) {
-                sliderleft.setPower(0.7);
-                sliderright.setPower(0.7);
+                sliderleft.setPower(0.8);
+                sliderright.setPower(0.8);
             }
             else if (down < 0 && up == 0) {
-                sliderleft.setPower(-0.8);
-                sliderright.setPower(-0.8);
+                sliderleft.setPower(-0.9);
+                sliderright.setPower(-0.9);
             }
             else {
                 sliderleft.setPower(0);

@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.New.Util.Utils;
 
 
 @Autonomous
-public class AutoRedLeft extends LinearOpMode {
+public class RedRight extends LinearOpMode {
 
     ServoImplEx servospate = null;
     DcMotorEx sliderleft = null;
@@ -148,7 +148,8 @@ public class AutoRedLeft extends LinearOpMode {
                 .splineTo(new Vector2d(-26.63, -12.04), Math.toRadians(0.00))
                 .build();
 
-       drive.setPoseEstimate(towall.start());
+
+        drive.setPoseEstimate(towall.start());
 
         drive.followTrajectorySequence(towall);
 
