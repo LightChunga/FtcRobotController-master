@@ -131,23 +131,6 @@ public class AutoRedLeft extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(-27.51, -11.77), Math.toRadians(0.00))
                 .build();
 
-
-        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(towall.end())
-                .lineToConstantHeading(new Vector2d(-38.36, -8.87))
-                .lineToConstantHeading(new Vector2d(-49.30, -10.69))
-                .lineToConstantHeading(new Vector2d(-48.80, -49.30))
-                .lineToConstantHeading(new Vector2d(-54.60, -56.59))
-                .lineToConstantHeading(new Vector2d(-43.17, -36.70))
-                .lineToConstantHeading(new Vector2d(-44.00, -13.01))
-                .lineToConstantHeading(new Vector2d(-56.48, -13.12))
-                .lineToConstantHeading(new Vector2d(-59.24, -54.43))
-                .lineToConstantHeading(new Vector2d(-58.88, -9.23))
-                .lineTo(new Vector2d(-62.77, -9.37))
-                .lineTo(new Vector2d(-62.50, -54.47))
-                .lineTo(new Vector2d(-47.24, -33.32))
-                .splineTo(new Vector2d(-26.63, -12.04), Math.toRadians(0.00))
-                .build();
-
        drive.setPoseEstimate(towall.start());
 
         drive.followTrajectorySequence(towall);
