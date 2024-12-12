@@ -117,7 +117,7 @@ public class BlueRight extends LinearOpMode {
                 .build();
 
         TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(49.00, 58.00, Math.toRadians(0.00)))
-                .splineToConstantHeading(new Vector2d(38.78, 18.13), Math.toRadians(-80.00))
+                .splineToConstantHeading(new Vector2d(40.80, 28.24), Math.toRadians(-80.00))
                 .splineToConstantHeading(new Vector2d(55.82, 9.46), Math.toRadians(0.00))
                 .lineTo(new Vector2d(57.00, 59.00))
                 .build();
@@ -125,7 +125,7 @@ public class BlueRight extends LinearOpMode {
         //Todo: park the bot
         TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(57.00, 59.00, Math.toRadians(0.00)))
                 .lineToConstantHeading(new Vector2d(36.76, 36.76))
-                .splineTo(new Vector2d(61.50, 11.00), Math.toRadians(0.00))
+                .splineToConstantHeading(new Vector2d(61.50, 11.00), Math.toRadians(0.00))
                 .lineToConstantHeading(new Vector2d(62.00, 56.55))
                 .build();
 
