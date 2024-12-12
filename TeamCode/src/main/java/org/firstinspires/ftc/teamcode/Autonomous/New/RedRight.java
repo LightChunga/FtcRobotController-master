@@ -27,6 +27,7 @@ public class RedRight extends LinearOpMode {
     final double pcm = 72;
     final double rp = Math.sqrt(6) - Math.sqrt(2);
     final double L0 = 29;
+
     public void RaiseArm(double h0) {
         double dif_h = rp * h0 - L0;
 
@@ -34,8 +35,8 @@ public class RedRight extends LinearOpMode {
 
         //double pwr = 0;
 
-        sliderright.setPower(-0.7);
-        sliderleft.setPower(-0.7);
+        sliderright.setPower(-0.9);
+        sliderleft.setPower(-0.9);
 
         while(-encoder_arm.getCurrentPosition() <= pts) {
             telemetry.addData("Current Encoder Position: ", -encoder_arm.getCurrentPosition());
@@ -57,13 +58,10 @@ public class RedRight extends LinearOpMode {
 
         //double pwr = 0;
 
-        sliderright.setPower(0.7);
-        sliderleft.setPower(0.7);
+        sliderright.setPower(0.9);
+        sliderleft.setPower(0.9);
 
         while(-encoder_arm.getCurrentPosition() >= pts) {
-            telemetry.addData("Current Encoder Position: ", -encoder_arm.getCurrentPosition());
-            telemetry.addData("Pts: ", pts);
-            telemetry.update();
         }
 
         /*if (isStopRequested())
@@ -102,52 +100,50 @@ public class RedRight extends LinearOpMode {
         telemetry.addData("Init encoder position: ", -encoder_arm.getCurrentPosition());
         telemetry.update();
 
+        TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(90.00)))
+                .lineToConstantHeading(new Vector2d(-8, 37.40))
+                .build();
+
+        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8, 34.45, Math.toRadians(90.00)))
+                .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
+                .splineTo(new Vector2d(-46.87, 5.71), Math.toRadians(180.00))
+                .lineTo(new Vector2d(-47.16, 56.69))
+                .lineToLinearHeading(new Pose2d(-24.00, 60, Math.toRadians(270.00))) //ToDo: tune this later
+                .build();
+
+        //applied twice
+        TrajectorySequence towall2 = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(270.00)))
+                .lineToLinearHeading(new Pose2d(-8.00, 37.40, Math.toRadians(90.00)))
+                .build();
+
+        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, 37.40, Math.toRadians(90.00)))
+                .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
+                .splineTo(new Vector2d(-57.56, 6.28), Math.toRadians(180.00))
+                .lineTo(new Vector2d(-56.98, 57.41))
+                .lineToLinearHeading(new Pose2d(-24.00, 60.00, Math.toRadians(270.00)))
+                .build();
+
+        //towall2
+
+        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, 37.40, Math.toRadians(90.00)))
+                .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
+                .splineTo(new Vector2d(-62.61, 6.28), Math.toRadians(180.00))
+                .lineTo(new Vector2d(-62.47, 57.85))
+                .lineToLinearHeading(new Pose2d(-24.00, 60.00, Math.toRadians(270.00)))
+                .build();
+
+        //towall2
+
+        TrajectorySequence park = drive.trajectorySequenceBuilder(new Pose2d(-8.00, 37.40, Math.toRadians(90.00)))
+                .splineTo(new Vector2d(-42.10, 37.62), Math.toRadians(222.39))
+                .splineToLinearHeading(new Pose2d(-25.78, 10.18, Math.toRadians(270.00)), Math.toRadians(0.00))
+                .build();
+
         waitForStart();
 
         if (isStopRequested()) return;
 
         //ToDo
-        TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
-                .lineToConstantHeading(new Vector2d(-8.0, -38.40))
-                .build();
-
-        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -38.40, Math.toRadians(270.00)))
-                .splineTo(new Vector2d(-37.77, -40.80), Math.toRadians(90.00))
-                .splineTo(new Vector2d(-47.45, -9.75), Math.toRadians(180.00))
-                .lineTo(new Vector2d(-48, -60))
-                .build();
-
-        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(firstcube.end())
-                .splineToConstantHeading(new Vector2d(-47.88, -9.60), Math.toRadians(180.00))
-                .splineTo(new Vector2d(-56.55, -9.32), Math.toRadians(179.24))
-                .lineToConstantHeading(new Vector2d(-58, -60))
-                .build();
-
-        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-58.00, -60.00, Math.toRadians(180.00)))
-                .lineToConstantHeading(new Vector2d(-50.91, -29.39))
-                .lineToConstantHeading(new Vector2d(-61.46, -9.89))
-                .lineToConstantHeading(new Vector2d(-61.75, -59.29))
-                .lineToConstantHeading(new Vector2d(-41.52, -40.08))
-                .splineToConstantHeading(new Vector2d(-27.51, -11.77), Math.toRadians(0.00))
-                .build();
-
-
-        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(towall.end())
-                .lineToConstantHeading(new Vector2d(-38.36, -8.87))
-                .lineToConstantHeading(new Vector2d(-49.30, -10.69))
-                .lineToConstantHeading(new Vector2d(-48.80, -49.30))
-                .lineToConstantHeading(new Vector2d(-54.60, -56.59))
-                .lineToConstantHeading(new Vector2d(-43.17, -36.70))
-                .lineToConstantHeading(new Vector2d(-44.00, -13.01))
-                .lineToConstantHeading(new Vector2d(-56.48, -13.12))
-                .lineToConstantHeading(new Vector2d(-59.24, -54.43))
-                .lineToConstantHeading(new Vector2d(-58.88, -9.23))
-                .lineTo(new Vector2d(-62.77, -9.37))
-                .lineTo(new Vector2d(-62.50, -54.47))
-                .lineTo(new Vector2d(-47.24, -33.32))
-                .splineTo(new Vector2d(-26.63, -12.04), Math.toRadians(0.00))
-                .build();
-
 
         drive.setPoseEstimate(towall.start());
 

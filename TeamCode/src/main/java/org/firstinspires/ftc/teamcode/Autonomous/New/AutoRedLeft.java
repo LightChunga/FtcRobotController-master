@@ -34,17 +34,14 @@ public class AutoRedLeft extends LinearOpMode {
 
         //double pwr = 0;
 
-        sliderright.setPower(-0.7);
-        sliderleft.setPower(-0.7);
+        sliderright.setPower(-0.9);
+        sliderleft.setPower(-0.9);
 
         while(-encoder_arm.getCurrentPosition() <= pts) {
             telemetry.addData("Current Encoder Position: ", -encoder_arm.getCurrentPosition());
             telemetry.addData("Pts: ", pts);
             telemetry.update();
         }
-
-        /*if (isStopRequested())
-            exit(-1);*/
 
         sliderright.setPower(0);
         sliderleft.setPower(0);
@@ -57,17 +54,14 @@ public class AutoRedLeft extends LinearOpMode {
 
         //double pwr = 0;
 
-        sliderright.setPower(0.7);
-        sliderleft.setPower(0.7);
+        sliderright.setPower(0.9);
+        sliderleft.setPower(0.9);
 
         while(-encoder_arm.getCurrentPosition() >= pts) {
             telemetry.addData("Current Encoder Position: ", -encoder_arm.getCurrentPosition());
             telemetry.addData("Pts: ", pts);
             telemetry.update();
         }
-
-        /*if (isStopRequested())
-            exit(-1);*/
 
         sliderright.setPower(0);
         sliderleft.setPower(0);
@@ -102,10 +96,6 @@ public class AutoRedLeft extends LinearOpMode {
         telemetry.addData("Init encoder position: ", -encoder_arm.getCurrentPosition());
         telemetry.update();
 
-        waitForStart();
-
-        if (isStopRequested()) return;
-
         //ToDo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
                 .lineToConstantHeading(new Vector2d(-8.0, -38.40))
@@ -119,7 +109,7 @@ public class AutoRedLeft extends LinearOpMode {
 
         TrajectorySequence secondcube = drive.trajectorySequenceBuilder(firstcube.end())
                 .splineToConstantHeading(new Vector2d(-47.88, -9.60), Math.toRadians(180.00))
-                .splineTo(new Vector2d(-56.55, -9.32), Math.toRadians(179.24))
+                .splineTo(new Vector2d(-56.55, -9.32), Math.toRadians(180.00))
                 .lineToConstantHeading(new Vector2d(-58, -60))
                 .build();
 
@@ -130,6 +120,10 @@ public class AutoRedLeft extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(-41.52, -40.08))
                 .splineToConstantHeading(new Vector2d(-27.51, -11.77), Math.toRadians(0.00))
                 .build();
+
+        waitForStart();
+
+        if (isStopRequested()) return;
 
        drive.setPoseEstimate(towall.start());
 

@@ -123,7 +123,7 @@ public class BlueRight extends LinearOpMode {
                 .turn(Math.toRadians(180))
                 .build();
 
-        //Todo
+        //Todo: park the bot
         TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(57.00, 59.00, Math.toRadians(180.00)))
                 .splineToConstantHeading(new Vector2d(62.18, 9.60), Math.toRadians(0.00))
                 .lineToConstantHeading(new Vector2d(62.18, 58.28))

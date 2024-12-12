@@ -22,9 +22,10 @@ public class BlueLeft extends LinearOpMode {
     DcMotorEx encoder_arm = null;
 
     //ToDo: tune this later
-    static final double pcm = 68;
+    static final double pcm = 72;
     static final double rp = Math.sqrt(6) - Math.sqrt(2);
     static final double L0 = 29;
+
     public void RaiseArm(double h0) {
         double dif_h = rp * h0 - L0;
 
@@ -32,8 +33,8 @@ public class BlueLeft extends LinearOpMode {
 
         //double pwr = 0;
 
-        sliderright.setPower(-0.7);
-        sliderleft.setPower(-0.7);
+        sliderright.setPower(-0.9);
+        sliderleft.setPower(-0.9);
 
         while(-encoder_arm.getCurrentPosition() <= pts) {
             telemetry.addData("Current Encoder Position: ", -encoder_arm.getCurrentPosition());
@@ -55,8 +56,8 @@ public class BlueLeft extends LinearOpMode {
 
         //double pwr = 0;
 
-        sliderright.setPower(0.7);
-        sliderleft.setPower(0.7);
+        sliderright.setPower(0.9);
+        sliderleft.setPower(0.9);
 
         while(-encoder_arm.getCurrentPosition() >= pts) {
         }
@@ -96,13 +97,48 @@ public class BlueLeft extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        TrajectorySequence toTheWall = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(90.00)))
-                .lineToConstantHeading(new Vector2d(0.00, 38.4))
+        TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(90.00)))
+                .lineToConstantHeading(new Vector2d(-8, 37.40))
                 .build();
 
-        drive.setPoseEstimate(toTheWall.start());
+        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8, 34.45, Math.toRadians(90.00)))
+                .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
+                .splineTo(new Vector2d(-46.87, 5.71), Math.toRadians(180.00))
+                .lineTo(new Vector2d(-47.16, 56.69))
+                .lineToLinearHeading(new Pose2d(-24.00, 60, Math.toRadians(270.00))) //ToDo: tune this later
+                .build();
 
-        drive.followTrajectorySequence(toTheWall);
+        //applied twice
+        TrajectorySequence towall2 = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(270.00)))
+                .lineToLinearHeading(new Pose2d(-8.00, 37.40, Math.toRadians(90.00)))
+                .build();
+
+        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, 37.40, Math.toRadians(90.00)))
+                .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
+                .splineTo(new Vector2d(-57.56, 6.28), Math.toRadians(180.00))
+                .lineTo(new Vector2d(-56.98, 57.41))
+                .lineToLinearHeading(new Pose2d(-24.00, 60.00, Math.toRadians(270.00)))
+                .build();
+
+        //towall2
+
+        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, 37.40, Math.toRadians(90.00)))
+                .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
+                .splineTo(new Vector2d(-62.61, 6.28), Math.toRadians(180.00))
+                .lineTo(new Vector2d(-62.47, 57.85))
+                .lineToLinearHeading(new Pose2d(-24.00, 60.00, Math.toRadians(270.00)))
+                .build();
+
+        //towall2
+
+        TrajectorySequence park = drive.trajectorySequenceBuilder(new Pose2d(-8.00, 37.40, Math.toRadians(90.00)))
+                .splineTo(new Vector2d(-42.10, 37.62), Math.toRadians(222.39))
+                .splineToLinearHeading(new Pose2d(-25.78, 10.18, Math.toRadians(270.00)), Math.toRadians(0.00))
+                .build();
+
+        drive.setPoseEstimate(towall.start());
+
+        drive.followTrajectorySequence(towall);
 
         RaiseArm(80);
         sleep(200);
