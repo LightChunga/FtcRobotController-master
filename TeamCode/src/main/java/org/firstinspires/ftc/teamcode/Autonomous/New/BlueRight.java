@@ -109,24 +109,24 @@ public class BlueRight extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(8.00, 38.40))
                 .build();
 
-        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(8, 38.4, Math.toRadians(90)))
+        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(8.00, 38.40, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(21.59, 55.25), Math.toRadians(-53.10))
                 .splineTo(new Vector2d(31.56, 34.01), Math.toRadians(-50.11))
-                .splineTo(new Vector2d(46.87, -5.56), Math.toRadians(0.00))
-                .lineTo(new Vector2d(49.00, 60.00))
+                .splineTo(new Vector2d(46.15, 12.35), Math.toRadians(0.00))
+                .lineTo(new Vector2d(49.00, 58.00))
                 .build();
 
-        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(49.00, 60.00, Math.toRadians(0.00)))
+        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(49.00, 58.00, Math.toRadians(0.00)))
                 .splineToConstantHeading(new Vector2d(38.78, 18.13), Math.toRadians(-80.00))
-                .splineToConstantHeading(new Vector2d(55.82, 0.00), Math.toRadians(0.00))
+                .splineToConstantHeading(new Vector2d(55.82, 9.46), Math.toRadians(0.00))
                 .lineTo(new Vector2d(57.00, 59.00))
-                .turn(Math.toRadians(180))
                 .build();
 
         //Todo: park the bot
-        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(57.00, 59.00, Math.toRadians(180.00)))
-                .splineToConstantHeading(new Vector2d(62.18, 9.60), Math.toRadians(0.00))
-                .lineToConstantHeading(new Vector2d(62.18, 58.28))
+        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(57.00, 59.00, Math.toRadians(0.00)))
+                .lineToConstantHeading(new Vector2d(36.76, 36.76))
+                .splineTo(new Vector2d(61.50, 11.00), Math.toRadians(0.00))
+                .lineToConstantHeading(new Vector2d(62.00, 56.55))
                 .build();
 
         drive.setPoseEstimate(towall.start());
