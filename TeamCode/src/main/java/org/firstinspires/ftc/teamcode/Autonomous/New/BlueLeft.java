@@ -109,35 +109,36 @@ public class BlueLeft extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(0, 38.40))
                 .build();
 
-        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(0, 38.40, Math.toRadians(90.00)))
+        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-0.00, 38.40, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
                 .splineTo(new Vector2d(-46.87, 5.71), Math.toRadians(180.00))
                 .lineTo(new Vector2d(-47.16, 56.69))
-                .waitSeconds(1)
-                .lineToLinearHeading(new Pose2d(-24.00, 60, Math.toRadians(270.00))) //ToDo: tune this later
+                .splineToLinearHeading(new Pose2d(-54.69, 47.65, Math.toRadians(270.00)), Math.toRadians(227.11))
+                .splineToConstantHeading(new Vector2d(-60.0, 57), Math.toRadians(90.00))
+                .lineToConstantHeading(new Vector2d(-24.00, 57.00))
                 .build();
 
         //applied twice
-        TrajectorySequence towall2 = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(270.00)))
+        TrajectorySequence towall2 = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 57.00, Math.toRadians(270.00)))
                 .lineToLinearHeading(new Pose2d(0, 42.00, Math.toRadians(90.00)))
                 .build();
 
-        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(0, 38.40, Math.toRadians(90.00)))
+        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(-0.00, 38.40, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
-                .splineTo(new Vector2d(-57.56, 6.28), Math.toRadians(180.00))
-                .lineTo(new Vector2d(-56.98, 57.41))
-                .waitSeconds(1)
-                .lineToLinearHeading(new Pose2d(-24.00, 60.00, Math.toRadians(270.00)))
+                .splineTo(new Vector2d(-57.64, 12.74), Math.toRadians(180.00))
+                .lineToConstantHeading(new Vector2d(-60.00, 57.00))
+                .turn(90)
+                .lineToConstantHeading(new Vector2d(-24.00, 57.00))
                 .build();
 
         //towall2
 
-        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(0, 38.40, Math.toRadians(90.00)))
+        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-0.00, 38.40, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
-                .splineTo(new Vector2d(-62.61, 6.28), Math.toRadians(180.00))
-                .lineTo(new Vector2d(-62.47, 57.85))
-                .waitSeconds(1)
-                .lineToLinearHeading(new Pose2d(-24.00, 60.00, Math.toRadians(270.00)))
+                .splineTo(new Vector2d(-60.88, 11.89), Math.toRadians(180.00))
+                .lineToConstantHeading(new Vector2d(-60.00, 58.00))
+                .turn(90)
+                .lineToConstantHeading(new Vector2d(-24.00, 57.00))
                 .build();
 
         //towall2
@@ -156,7 +157,7 @@ public class BlueLeft extends LinearOpMode {
         drive.followTrajectorySequence(firstcube);
         servospate.setPosition(0.12);
         drive.followTrajectorySequence(towall2);
-        RaiseArm(75);
+        RaiseArm(70);
         drive.followTrajectorySequence(towallcube);
         RaiseArm(80);
         servospate.setPosition(0);
@@ -165,7 +166,7 @@ public class BlueLeft extends LinearOpMode {
         drive.followTrajectorySequence(secondcube);
         servospate.setPosition(0.12);
         drive.followTrajectorySequence(towall2);
-        RaiseArm(75);
+        RaiseArm(70);
         drive.followTrajectorySequence(towallcube);
         RaiseArm(80);
         servospate.setPosition(0);
@@ -174,7 +175,7 @@ public class BlueLeft extends LinearOpMode {
         drive.followTrajectorySequence(thirdcube);
         servospate.setPosition(0.12);
         drive.followTrajectorySequence(towall2);
-        RaiseArm(75);
+        RaiseArm(70);
         drive.followTrajectorySequence(towallcube);
         RaiseArm(80);
         servospate.setPosition(0);
