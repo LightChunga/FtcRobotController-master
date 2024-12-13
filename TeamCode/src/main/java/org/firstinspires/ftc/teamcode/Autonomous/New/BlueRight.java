@@ -125,9 +125,10 @@ public class BlueRight extends LinearOpMode {
 
         TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(57.00, 59.00, Math.toRadians(90.00)))
                 .lineToLinearHeading(new Pose2d(36.76, 36.76, Math.toRadians(270.00)))
-                .splineToConstantHeading(new Vector2d(62.32, 11.19), Math.toRadians(0.00))
-                .lineToConstantHeading(new Vector2d(62.61, 55.82))
-                .splineTo(new Vector2d(28.67, 10.04), Math.toRadians(180.00))
+                .splineTo(new Vector2d(61.31, 11.92), Math.toRadians(0.00))
+                .lineToConstantHeading(new Vector2d(62.03, 55.68))
+                .lineToConstantHeading(new Vector2d(42.39, 28.09))
+                .splineToConstantHeading(new Vector2d(28.67, 9.60), Math.toRadians(180.00))
                 .build();
 
         drive.setPoseEstimate(towall.start());
