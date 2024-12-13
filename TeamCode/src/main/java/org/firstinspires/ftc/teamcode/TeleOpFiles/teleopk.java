@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
@@ -21,7 +22,7 @@ public class teleopk extends LinearOpMode {
     DcMotor rightDrive_fata = null;
     DcMotorEx sliderleft = null;
     DcMotorEx sliderright = null;
-    DcMotor actuator = null;
+    DcMotorEx actuator = null;
 
     DcMotorEx encoder_arm = null;
     ServoImplEx bclaw = null;
@@ -39,7 +40,7 @@ public class teleopk extends LinearOpMode {
 
         sliderleft = hardwareMap.get(DcMotorEx.class, "SliderLeft");
         sliderright = hardwareMap.get(DcMotorEx.class, "SliderRight");
-        actuator = hardwareMap.get(DcMotor.class, "Pivot");
+        actuator = hardwareMap.get(DcMotorEx.class, "Pivot");
         encoder_arm = hardwareMap.get(DcMotorEx.class, "armencoder");
 
         claw = hardwareMap.get(ServoImplEx.class, "claw"); //hook
@@ -65,7 +66,6 @@ public class teleopk extends LinearOpMode {
 
         sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sliderright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        actuator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         //claw.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
@@ -78,16 +78,18 @@ public class teleopk extends LinearOpMode {
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftDrive_fata.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive_fata.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         actuator.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         actuator.setTargetPosition(0);
-        actuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        actuator.setPower(0.1);
+        actuator.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, new PIDFCoefficients(8, 0, 0, 0));
+        actuator.setPower(0.9);
 
         telemetry.addData("Status", "Initialized");
 
         double x, y, z, up, down;
-        boolean actup, actdown, actdownful;
+        boolean actup, actdown;
         double deadzone = 0.2;
+        int pos = 0;
         boolean a1,b1,a, b, upservo, downservo, su,sd,sb1,sb2;
 
         telemetry.addData("Current pivot poz:", actuator.getCurrentPosition());
@@ -114,7 +116,6 @@ public class teleopk extends LinearOpMode {
 
             actup = gamepad1.dpad_up;
             actdown = gamepad1.dpad_down;
-            actdownful = gamepad1.y;
 
             downservo = gamepad1.left_bumper;
             upservo = gamepad1.right_bumper;
@@ -160,15 +161,18 @@ public class teleopk extends LinearOpMode {
             if (actup && !actdown) {
                 actuator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 actuator.setPower(0.4);
+                pos = actuator.getCurrentPosition();
             }
             else if (!actup && actdown) {
                 actuator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 actuator.setPower(-0.3);
+                pos = actuator.getCurrentPosition();
             }
             else if (!actup && !actdown) {
-                actuator.setTargetPosition(actuator.getCurrentPosition());
+                actuator.setPower(0);
+                actuator.setTargetPosition(pos);
                 actuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                actuator.setPower(0.1);
+                actuator.setPower(0.9);
             }
 
             if(up>0 && down == 0) {
