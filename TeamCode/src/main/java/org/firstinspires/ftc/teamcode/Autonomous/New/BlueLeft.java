@@ -102,14 +102,14 @@ public class BlueLeft extends LinearOpMode {
         if (isStopRequested()) return;
 
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(90.00)))
-                .lineToConstantHeading(new Vector2d(0, 42.00))
+                .lineToConstantHeading(new Vector2d(0, 38.4))
                 .build();
 
         TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(0, 42.00, Math.toRadians(90.00)))
-                .lineToConstantHeading(new Vector2d(0, 37.40))
+                .lineToConstantHeading(new Vector2d(0, 38.40))
                 .build();
 
-        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(0, 37.40, Math.toRadians(90.00)))
+        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(0, 38.40, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
                 .splineTo(new Vector2d(-46.87, 5.71), Math.toRadians(180.00))
                 .lineTo(new Vector2d(-47.16, 56.69))
@@ -122,7 +122,7 @@ public class BlueLeft extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(0, 42.00, Math.toRadians(90.00)))
                 .build();
 
-        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(0, 37.40, Math.toRadians(90.00)))
+        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(0, 38.40, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
                 .splineTo(new Vector2d(-57.56, 6.28), Math.toRadians(180.00))
                 .lineTo(new Vector2d(-56.98, 57.41))
@@ -132,7 +132,7 @@ public class BlueLeft extends LinearOpMode {
 
         //towall2
 
-        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(0, 37.40, Math.toRadians(90.00)))
+        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(0, 38.40, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
                 .splineTo(new Vector2d(-62.61, 6.28), Math.toRadians(180.00))
                 .lineTo(new Vector2d(-62.47, 57.85))
@@ -142,43 +142,41 @@ public class BlueLeft extends LinearOpMode {
 
         //towall2
 
-        TrajectorySequence park = drive.trajectorySequenceBuilder(new Pose2d(0, 37.40, Math.toRadians(90.00)))
+        TrajectorySequence park = drive.trajectorySequenceBuilder(new Pose2d(0, 38.40, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-42.10, 37.62), Math.toRadians(222.39))
                 .splineToLinearHeading(new Pose2d(-25.78, 10.18, Math.toRadians(270.00)), Math.toRadians(0.00))
                 .build();
 
         drive.setPoseEstimate(towall.start());
         drive.followTrajectorySequence(towall);
-        RaiseArm(85);
-        drive.followTrajectorySequence(towallcube);
-        LowerArm(75);
+        RaiseArm(80);
         servospate.setPosition(0);
         LowerArm(29);
 
         drive.followTrajectorySequence(firstcube);
         servospate.setPosition(0.12);
         drive.followTrajectorySequence(towall2);
-        RaiseArm(85);
+        RaiseArm(75);
         drive.followTrajectorySequence(towallcube);
-        LowerArm(75);
+        RaiseArm(80);
         servospate.setPosition(0);
         LowerArm(29);
 
         drive.followTrajectorySequence(secondcube);
         servospate.setPosition(0.12);
         drive.followTrajectorySequence(towall2);
-        RaiseArm(85);
+        RaiseArm(75);
         drive.followTrajectorySequence(towallcube);
-        LowerArm(75);
+        RaiseArm(80);
         servospate.setPosition(0);
         LowerArm(29);
 
         drive.followTrajectorySequence(thirdcube);
         servospate.setPosition(0.12);
         drive.followTrajectorySequence(towall2);
-        RaiseArm(85);
+        RaiseArm(75);
         drive.followTrajectorySequence(towallcube);
-        LowerArm(75);
+        RaiseArm(80);
         servospate.setPosition(0);
         LowerArm(29);
 
