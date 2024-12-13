@@ -163,7 +163,7 @@ public class BlueLeft extends LinearOpMode {
         servospate.setPosition(0);
         LowerArm(29);
 
-        drive.followTrajectorySequence(secondcube);
+        /*drive.followTrajectorySequence(secondcube);
         servospate.setPosition(0.12);
         drive.followTrajectorySequence(towall2);
         RaiseArm(70);
@@ -179,7 +179,7 @@ public class BlueLeft extends LinearOpMode {
         drive.followTrajectorySequence(towallcube);
         RaiseArm(80);
         servospate.setPosition(0);
-        LowerArm(29);
+        LowerArm(29);*/
 
         drive.followTrajectorySequence(park);
     }
