@@ -78,6 +78,10 @@ public class teleopk extends LinearOpMode {
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftDrive_fata.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive_fata.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        actuator.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        actuator.setTargetPosition(0);
+        actuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        actuator.setPower(0.1);
 
         telemetry.addData("Status", "Initialized");
 
@@ -153,14 +157,19 @@ public class teleopk extends LinearOpMode {
                 bclaw.setPosition(0.815);
             }
 
-            if (actup && !actdown)
+            if (actup && !actdown) {
+                actuator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 actuator.setPower(0.4);
-            else if (!actup && actdown)
+            }
+            else if (!actup && actdown) {
+                actuator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 actuator.setPower(-0.3);
-            else if (actdownful && !actup && !actdown)
-                actuator.setPower(-0.3);
-            else
-                actuator.setPower(0);
+            }
+            else if (!actup && !actdown) {
+                actuator.setTargetPosition(actuator.getCurrentPosition());
+                actuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                actuator.setPower(0.1);
+            }
 
             if(up>0 && down == 0) {
                 sliderleft.setPower(0.8);
