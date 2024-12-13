@@ -104,6 +104,10 @@ public class RedRight extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(-8, 37.40))
                 .build();
 
+        TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, 42.00, Math.toRadians(90.00)))
+                .lineToConstantHeading(new Vector2d(-8.00, 37.40))
+                .build();
+
         TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8, 34.45, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
                 .splineTo(new Vector2d(-46.87, 5.71), Math.toRadians(180.00))
@@ -146,23 +150,40 @@ public class RedRight extends LinearOpMode {
         //ToDo
 
         drive.setPoseEstimate(towall.start());
-
         drive.followTrajectorySequence(towall);
-
-        RaiseArm(80);
-        //sleep(8000);
+        RaiseArm(85);
+        drive.followTrajectorySequence(towallcube);
+        LowerArm(75);
         servospate.setPosition(0);
-        sleep(200);
         LowerArm(29);
 
         drive.followTrajectorySequence(firstcube);
-        telemetry.addData("firstcube", 1);
-        telemetry.update();
+        servospate.setPosition(0.12);
+        drive.followTrajectorySequence(towall2);
+        RaiseArm(85);
+        drive.followTrajectorySequence(towallcube);
+        LowerArm(75);
+        servospate.setPosition(0);
+        LowerArm(29);
+
         drive.followTrajectorySequence(secondcube);
-        telemetry.addData("secondcube", 1);
-        telemetry.update();
+        servospate.setPosition(0.12);
+        drive.followTrajectorySequence(towall2);
+        RaiseArm(85);
+        drive.followTrajectorySequence(towallcube);
+        LowerArm(75);
+        servospate.setPosition(0);
+        LowerArm(29);
+
         drive.followTrajectorySequence(thirdcube);
-        telemetry.addData("thirdcube", 1);
-        telemetry.update();
+        servospate.setPosition(0.12);
+        drive.followTrajectorySequence(towall2);
+        RaiseArm(85);
+        drive.followTrajectorySequence(towallcube);
+        LowerArm(75);
+        servospate.setPosition(0);
+        LowerArm(29);
+
+        drive.followTrajectorySequence(park);
     }
 }

@@ -140,12 +140,12 @@ public class BlueRight extends LinearOpMode {
         sleep(200);
         LowerArm(29);
 
-        /*drive.followTrajectorySequence(firstcube);
+        drive.followTrajectorySequence(firstcube);
         telemetry.addData("firstcube", 1);
         telemetry.update();
         drive.followTrajectorySequence(secondcube);
         telemetry.addData("secondcube", 1);
-        telemetry.update();*/
+        telemetry.update();
         drive.followTrajectorySequence(thirdcube);
         telemetry.addData("thirdcube", 1);
         telemetry.update();
