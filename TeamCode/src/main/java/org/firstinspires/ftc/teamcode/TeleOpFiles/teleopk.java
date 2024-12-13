@@ -57,6 +57,7 @@ public class teleopk extends LinearOpMode {
         rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftDrive_fata.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightDrive_fata.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        actuator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         sliderleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

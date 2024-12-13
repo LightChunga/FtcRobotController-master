@@ -20,6 +20,7 @@ public class BlueLeft extends LinearOpMode {
     DcMotorEx sliderleft = null;
     DcMotorEx sliderright = null;
     DcMotorEx encoder_arm = null;
+    DcMotorEx actuator = null;
 
     //ToDo: tune this later
     static final double pcm = 72;
@@ -81,6 +82,8 @@ public class BlueLeft extends LinearOpMode {
 
         encoder_arm = hardwareMap.get(DcMotorEx.class, "armencoder");
 
+        actuator = hardwareMap.get(DcMotorEx.class, "Pivot");
+
         encoder_arm.setDirection(DcMotorSimple.Direction.REVERSE);
 
         sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -90,6 +93,7 @@ public class BlueLeft extends LinearOpMode {
 
         sliderleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        actuator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         servospate.setPosition(0.12);
 
@@ -98,14 +102,14 @@ public class BlueLeft extends LinearOpMode {
         if (isStopRequested()) return;
 
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(90.00)))
-                .lineToConstantHeading(new Vector2d(-8, 42.00))
+                .lineToConstantHeading(new Vector2d(0, 42.00))
                 .build();
 
-        TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, 42.00, Math.toRadians(90.00)))
-                .lineToConstantHeading(new Vector2d(-8.00, 37.40))
+        TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(0, 42.00, Math.toRadians(90.00)))
+                .lineToConstantHeading(new Vector2d(0, 37.40))
                 .build();
 
-        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8, 37.40, Math.toRadians(90.00)))
+        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(0, 37.40, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
                 .splineTo(new Vector2d(-46.87, 5.71), Math.toRadians(180.00))
                 .lineTo(new Vector2d(-47.16, 56.69))
@@ -115,10 +119,10 @@ public class BlueLeft extends LinearOpMode {
 
         //applied twice
         TrajectorySequence towall2 = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(270.00)))
-                .lineToLinearHeading(new Pose2d(-8.00, 42.00, Math.toRadians(90.00)))
+                .lineToLinearHeading(new Pose2d(0, 42.00, Math.toRadians(90.00)))
                 .build();
 
-        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, 37.40, Math.toRadians(90.00)))
+        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(0, 37.40, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
                 .splineTo(new Vector2d(-57.56, 6.28), Math.toRadians(180.00))
                 .lineTo(new Vector2d(-56.98, 57.41))
@@ -128,7 +132,7 @@ public class BlueLeft extends LinearOpMode {
 
         //towall2
 
-        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, 37.40, Math.toRadians(90.00)))
+        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(0, 37.40, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
                 .splineTo(new Vector2d(-62.61, 6.28), Math.toRadians(180.00))
                 .lineTo(new Vector2d(-62.47, 57.85))
@@ -138,7 +142,7 @@ public class BlueLeft extends LinearOpMode {
 
         //towall2
 
-        TrajectorySequence park = drive.trajectorySequenceBuilder(new Pose2d(-8.00, 37.40, Math.toRadians(90.00)))
+        TrajectorySequence park = drive.trajectorySequenceBuilder(new Pose2d(0, 37.40, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-42.10, 37.62), Math.toRadians(222.39))
                 .splineToLinearHeading(new Pose2d(-25.78, 10.18, Math.toRadians(270.00)), Math.toRadians(0.00))
                 .build();
