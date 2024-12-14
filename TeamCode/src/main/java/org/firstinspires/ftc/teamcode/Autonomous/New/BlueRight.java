@@ -110,27 +110,27 @@ public class BlueRight extends LinearOpMode {
                 .build();
 
         TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(8.00, 38.40, Math.toRadians(90.00)))
-                .splineToConstantHeading(new Vector2d(21.59, 55.25), Math.toRadians(-50.00))
-                .splineToConstantHeading(new Vector2d(32.28, 39.07), Math.toRadians(-50.11))
-                .splineToConstantHeading(new Vector2d(48.75, 13.36), Math.toRadians(90.00))
-                .lineToConstantHeading(new Vector2d(49.00, 58.00))
+                .splineTo(new Vector2d(21.59, 55.25), Math.toRadians(-50.00))
+                .splineTo(new Vector2d(32.28, 39.07), Math.toRadians(-50.11))
+                .splineTo(new Vector2d(47.45, 11.63), Math.toRadians(0.00))
+                .lineToConstantHeading(new Vector2d(47, 58))
                 .build();
 
-        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(49.00, 58.00, Math.toRadians(90.00)))
-                .lineToConstantHeading(new Vector2d(41.96, 38.64))
-                .splineToConstantHeading(new Vector2d(38.78, 8.16), Math.toRadians(-61.00))
-                .splineToConstantHeading(new Vector2d(56.55, 3.83), Math.toRadians(90.00))
+        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(47.00, 58.00, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(41.96, 38.64, Math.toRadians(270.00)))
+                .splineTo(new Vector2d(38.78, 8.16), Math.toRadians(-61.00))
+                .splineTo(new Vector2d(56.55, 3.83), Math.toRadians(0.00))
                 .lineToConstantHeading(new Vector2d(57.00, 57.00))
                 .build();
 
-        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(57.00, 57.00, Math.toRadians(90.00)))
-                .lineToConstantHeading(new Vector2d(55.39, 44.85))
-                .lineToLinearHeading(new Pose2d(36.76, 36.76, Math.toRadians(270.00)))
-                .splineTo(new Vector2d(61.60, 11.77), Math.toRadians(0.00))
-                .lineToConstantHeading(new Vector2d(62.03, 56.11))
-                .lineToConstantHeading(new Vector2d(47.88, 27.23))
-                .splineToLinearHeading(new Pose2d(28.53, 9.17, Math.toRadians(0.00)), Math.toRadians(180.00))
+        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(57.00, 57.00, Math.toRadians(0.00)))
+                .lineToLinearHeading(new Pose2d(42.54, 41.09, Math.toRadians(270.00)))
+                .splineTo(new Vector2d(61.31, 4.84), Math.toRadians(0.00))
+                .lineToConstantHeading(new Vector2d(61.46, 55.68))
+                .lineToLinearHeading(new Pose2d(46.00, 27.51, Math.toRadians(270.00)))
+                .splineTo(new Vector2d(27.23, 11.34), Math.toRadians(180.00))
                 .build();
+
 
         drive.setPoseEstimate(towall.start());
 
