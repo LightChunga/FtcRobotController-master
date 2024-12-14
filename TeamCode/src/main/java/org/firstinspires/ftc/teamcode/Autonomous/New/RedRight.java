@@ -102,20 +102,19 @@ public class RedRight extends LinearOpMode {
         if (isStopRequested()) return;
 
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(24.00, -60.00, Math.toRadians(90.00)))
-                .lineToConstantHeading(new Vector2d(0, 38.4))
+                //.waitSeconds(1)
+                .lineToConstantHeading(new Vector2d(0, -38.4))
                 .build();
 
         TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(0, 42.00, Math.toRadians(90.00)))
-                .lineToConstantHeading(new Vector2d(0, 38.40))
+                .lineToConstantHeading(new Vector2d(0, -38.40))
                 .build();
 
-        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-0.00, 38.40, Math.toRadians(90.00)))
-                .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
-                .splineTo(new Vector2d(-46.87, 5.71), Math.toRadians(180.00))
-                .lineTo(new Vector2d(-47.16, 56.69))
-                .splineToLinearHeading(new Pose2d(-54.69, 47.65, Math.toRadians(270.00)), Math.toRadians(227.11))
-                .splineToConstantHeading(new Vector2d(-60.0, 57), Math.toRadians(90.00))
-                .lineToConstantHeading(new Vector2d(-24.00, 57.00))
+        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(0.00, -38.40, Math.toRadians(270.00)))
+                .splineToLinearHeading(new Pose2d(26.21, -49.04, Math.toRadians(0.00)), Math.toRadians(0.00))
+                .splineToConstantHeading(new Vector2d(47.45, -9.46), Math.toRadians(0.00))
+                .lineToConstantHeading(new Vector2d(47.59, -58.28))
+                .lineToConstantHeading(new Vector2d(24.00, -57.00))
                 .build();
 
         //applied twice
