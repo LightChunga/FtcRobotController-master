@@ -101,12 +101,12 @@ public class RedRight extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(24.00, -60.00, Math.toRadians(90.00)))
+        TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(24.00, -60.00, Math.toRadians(270.00)))
                 //.waitSeconds(1)
                 .lineToConstantHeading(new Vector2d(0, -38.4))
                 .build();
 
-        TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(0, 42.00, Math.toRadians(90.00)))
+        TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(0, 42.00, Math.toRadians(270.00)))
                 .lineToConstantHeading(new Vector2d(0, -38.40))
                 .build();
 
@@ -118,7 +118,7 @@ public class RedRight extends LinearOpMode {
                 .build();
 
         //applied twice
-        TrajectorySequence towall2 = drive.trajectorySequenceBuilder(new Pose2d(24.00, -57.00, Math.toRadians(90.00)))
+        TrajectorySequence towall2 = drive.trajectorySequenceBuilder(new Pose2d(24.00, -57.00, Math.toRadians(270.00)))
                 .lineToLinearHeading(new Pose2d(0.00, -42.00, Math.toRadians(270.00)))
                 .build();
 
