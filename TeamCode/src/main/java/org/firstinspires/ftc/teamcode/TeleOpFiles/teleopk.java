@@ -132,7 +132,7 @@ public class teleopk extends LinearOpMode {
             rightDrive.setPower(Range.clip(y + x+z, -1, 1));
 
             if(sb1 && !sb2){
-                servospate.setPosition(-0.08); //open
+                servospate.setPosition(0.08); //open
             } else if(!sb1 && sb2){
                 servospate.setPosition(0.23); //close
             }
