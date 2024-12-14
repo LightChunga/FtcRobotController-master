@@ -149,6 +149,7 @@ public class BlueLeft extends LinearOpMode {
                 .build();
 
         drive.setPoseEstimate(towall.start());
+
         drive.followTrajectorySequence(towall);
         RaiseArm(80);
         servospate.setPosition(0);
