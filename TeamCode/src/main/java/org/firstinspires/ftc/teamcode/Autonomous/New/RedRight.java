@@ -95,7 +95,7 @@ public class RedRight extends LinearOpMode {
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         actuator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        servospate.setPosition(0.12);
+        servospate.setPosition(0.23);
 
         waitForStart();
 
@@ -136,7 +136,7 @@ public class RedRight extends LinearOpMode {
         LowerArm(29);
 
         drive.followTrajectorySequence(firstcube);
-        servospate.setPosition(0.12);
+        servospate.setPosition(0.23);
         drive.followTrajectorySequence(towall2);
         RaiseArm(70);
         drive.followTrajectorySequence(towallcube);

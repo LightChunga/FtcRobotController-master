@@ -95,7 +95,7 @@ public class BlueRight extends LinearOpMode {
         sliderleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        servospate.setPosition(0.1);
+        servospate.setPosition(0.23);
 
         telemetry.addData("Init encoder position: ", -encoder_arm.getCurrentPosition());
         telemetry.update();
