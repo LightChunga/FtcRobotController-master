@@ -100,8 +100,8 @@ public class AutoRedLeft extends LinearOpMode {
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
                 .addDisplacementMarker(() -> {
                     servobk.setPosition(0.47);
-                    sliderleft.setTargetPosition(encpts(60));
-                    sliderright.setTargetPosition(encpts(60));
+                    sliderleft.setTargetPosition(encpts(80));
+                    sliderright.setTargetPosition(encpts(80));
 
                     sliderleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     sliderright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -109,31 +109,31 @@ public class AutoRedLeft extends LinearOpMode {
                     sliderleft.setPower(0.9);
                     sliderright.setPower(0.9);
                 })
-                .lineToConstantHeading(new Vector2d(-6, -38))
-                .addDisplacementMarker(() -> {
-                    sliderleft.setTargetPosition(encpts(80));
-                    sliderleft.setTargetPosition(encpts(80));
-
-                    sliderleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    sliderright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                    sliderleft.setPower(0.9);
-                    sliderright.setPower(0.9);
-                })
-                .waitSeconds(1)
-                .addDisplacementMarker(() -> {
-                    servospate.setPosition(0);
-                })
+                .lineToConstantHeading(new Vector2d(-6, -40))
+                .waitSeconds(2)
                 .build();
 
         TrajectorySequence towalltest = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
                 .lineToConstantHeading(new Vector2d(-6, -38))
                 .build();
 
-        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -38.40, Math.toRadians(270.00)))
+        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -40, Math.toRadians(270.00)))
+                .addDisplacementMarker(() -> {
+                    sliderleft.setPower(0);
+                    sliderright.setPower(0);
+                    servospate.setPosition(0);
+                    sliderleft.setTargetPosition(encpts(29));
+                    sliderright.setTargetPosition(encpts(29));
+
+                    sliderleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    sliderright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                    sliderleft.setPower(-0.9);
+                    sliderright.setPower(-0.9);
+                })
                 .splineTo(new Vector2d(-37.77, -40.80), Math.toRadians(90.00))
-                .splineTo(new Vector2d(-47.45, -9.75), Math.toRadians(180.00))
-                .lineTo(new Vector2d(-48, -60))
+                /*.splineTo(new Vector2d(-47.45, -9.75), Math.toRadians(180.00))
+                .lineTo(new Vector2d(-48, -60))*/
                 .build();
 
         TrajectorySequence secondcube = drive.trajectorySequenceBuilder(firstcube.end())
@@ -154,8 +154,10 @@ public class AutoRedLeft extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-       drive.setPoseEstimate(towalltest.start());
+       drive.setPoseEstimate(towall.start());
 
-       drive.followTrajectorySequence(towalltest);
+       drive.followTrajectorySequence(towall);
+
+       drive.followTrajectorySequence(firstcube);
     }
 }
