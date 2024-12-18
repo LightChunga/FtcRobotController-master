@@ -80,7 +80,7 @@ public class AutoRedLeft extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         servospate = hardwareMap.get(ServoImplEx.class, "servospate");
-        servobk = hardwareMap.get(ServoImplEx.class, "servosbk");
+        servobk = hardwareMap.get(ServoImplEx.class, "servobk");
 
         sliderleft = hardwareMap.get(DcMotorEx.class, "SliderLeft");
 
