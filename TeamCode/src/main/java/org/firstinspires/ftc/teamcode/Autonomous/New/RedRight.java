@@ -43,9 +43,6 @@ public class RedRight extends LinearOpMode {
             telemetry.update();
         }
 
-        /*if (isStopRequested())
-            exit(-1);*/
-
         sliderright.setPower(0);
         sliderleft.setPower(0);
     }
@@ -102,7 +99,6 @@ public class RedRight extends LinearOpMode {
         if (isStopRequested()) return;
 
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(24.00, -60.00, Math.toRadians(270.00)))
-                //.waitSeconds(1)
                 .lineToConstantHeading(new Vector2d(0, -38.4))
                 .build();
 
