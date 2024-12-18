@@ -156,6 +156,6 @@ public class AutoRedLeft extends LinearOpMode {
 
        drive.setPoseEstimate(towalltest.start());
 
-       drive.followTrajectorySequence(towall);
+       drive.followTrajectorySequence(towalltest);
     }
 }
