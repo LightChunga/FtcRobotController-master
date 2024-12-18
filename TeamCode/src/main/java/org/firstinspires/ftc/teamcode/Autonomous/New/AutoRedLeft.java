@@ -86,9 +86,6 @@ public class AutoRedLeft extends LinearOpMode {
 
         sliderright = hardwareMap.get(DcMotorEx.class, "SliderRight");
 
-        encoder_arm.setDirection(DcMotorSimple.Direction.REVERSE);
-        encoder_arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
         sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sliderright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -98,9 +95,6 @@ public class AutoRedLeft extends LinearOpMode {
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         servospate.setPosition(0.23);
-
-        telemetry.addData("Init encoder position: ", -encoder_arm.getCurrentPosition());
-        telemetry.update();
 
         //ToDo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
