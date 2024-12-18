@@ -78,11 +78,7 @@ public class teleopk extends LinearOpMode {
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftDrive_fata.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive_fata.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        actuator.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        actuator.setTargetPosition(0);
-        actuator.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, new PIDFCoefficients(8, 0, 0, 0));
-        actuator.setPower(0.9);
+        //actuator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         telemetry.addData("Status", "Initialized");
 
@@ -104,13 +100,16 @@ public class teleopk extends LinearOpMode {
             x = gamepad1.left_stick_x * 1.1;
 
             z = gamepad1.right_stick_x;
-            a1=gamepad2.a;
-            b1=gamepad2.b;
+
+            a1 = gamepad2.a;
+            b1 = gamepad2.b;
+
             a = gamepad1.a; // servo close/open
             b = gamepad1.b;
 
             up = gamepad2.right_trigger;
             down = -gamepad2.left_trigger;
+
             sb1= gamepad2.y;
             sb2 = gamepad2.x;
 
@@ -119,6 +118,7 @@ public class teleopk extends LinearOpMode {
 
             downservo = gamepad1.left_bumper;
             upservo = gamepad1.right_bumper;
+
             su = gamepad2.left_bumper;
             sd = gamepad2.right_bumper;
             if(Math.abs(x)<deadzone) x = 0;
@@ -132,48 +132,47 @@ public class teleopk extends LinearOpMode {
             rightDrive.setPower(Range.clip(y + x+z, -1, 1));
 
             if(sb1 && !sb2){
-                servospate.setPosition(0.08); //open
+                servospate.setPosition(0.1); //poz preluare
             } else if(!sb1 && sb2){
-                servospate.setPosition(0.23); //close
+                servospate.setPosition(0.0); //pozitie transfer
             }
-            if(a1 && !b1){
-                claw2.setPosition(0.0);
+
+            if(a1 && !b1) {
+                claw2.setPosition(0.0);//gheara spate deschis
             } else if(!a1 && b1) {
-                claw2.setPosition(0.45);
+                claw2.setPosition(0.45);//gheara spate inchis
             }
+
             if(su && !sd) {
-                servobk.setPosition(0.0);
+                servobk.setPosition(0.0);//poz gheara spate transfer
             }else if (!su && sd){
-                servobk.setPosition(0.47);
+                servobk.setPosition(0.57);//poz gheara spate punctat
             }
+
             if (a && !b) {
-                claw.setPosition(0.35);
+                claw.setPosition(0.35);//gheara preluare inchis
             } else if (!a && b) {
-                claw.setPosition(-0.5);
+                claw.setPosition(-0.5);//gheara preluare deschis
             }
 //
             if (upservo && !downservo) {
-                bclaw.setPosition(-0.4);
+                bclaw.setPosition(0.02);//preluare
+                servospate.setPosition(0.1); //poz preluare
             } else if (!upservo && downservo) {
-                bclaw.setPosition(0.815);
+                bclaw.setPosition(0.7);//transfer
+                claw2.setPosition(0.0);//gheara spate deschis
+                servospate.setPosition(0.0); //pozitie transfer
+
+                servobk.setPosition(0.0);//poz gheara spate transfer
             }
 
             if (actup && !actdown) {
-                actuator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                actuator.setPower(0.4);
-                pos = actuator.getCurrentPosition();
+                actuator.setPower(0.4);//extindere intake
             }
             else if (!actup && actdown) {
-                actuator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                actuator.setPower(-0.3);
-                pos = actuator.getCurrentPosition();
-            }
-            else if (!actup && !actdown) {
+                actuator.setPower(-0.3);//retragere intake
+            } else if (!actup && !actdown)
                 actuator.setPower(0);
-                actuator.setTargetPosition(pos);
-                actuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                actuator.setPower(0.9);
-            }
 
             if(up>0 && down == 0) {
                 sliderleft.setPower(0.8);

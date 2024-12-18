@@ -110,9 +110,19 @@ public class RedRight extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(0, -38.40))
                 .build();
 
+        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(0.00, -38.40, Math.toRadians(270.00)))
+                .splineTo(new Vector2d(25.80, -58.54), Math.toRadians(0.00))
+                .splineTo(new Vector2d(32.67, -37.15), Math.toRadians(65.93))
+                .splineTo(new Vector2d(48.77, -9.70), Math.toRadians(0.00))
+                .lineToConstantHeading(new Vector2d(48.17, -56.26))
+                .turn(Math.toRadians(90))
+                .build();
+
+
         TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(0.00, -38.40, Math.toRadians(270.00)))
-                .splineTo(new Vector2d(26.21, -49.04), Math.toRadians(0.00))
-                .splineToConstantHeading(new Vector2d(47.45, -9.46), Math.toRadians(0.00))
+                .splineTo(new Vector2d(25.80, -58.54), Math.toRadians(0.00))
+                .splineTo(new Vector2d(32.67, -37.15), Math.toRadians(65.93))
+                .splineTo(new Vector2d(48.77, -9.70), Math.toRadians(0.00))
                 .lineToConstantHeading(new Vector2d(48.17, -56.26))
                 .turn(Math.toRadians(90))
                 .addDisplacementMarker(() -> {
@@ -139,15 +149,25 @@ public class RedRight extends LinearOpMode {
         servospate.setPosition(0);
         LowerArm(29);
 
-        drive.followTrajectorySequence(firstcube);
-        servospate.setPosition(0.23);
+        drive.followTrajectorySequence(firstcube1);
         drive.followTrajectorySequence(towall2);
-        RaiseArm(70);
+        RaiseArm(60);
         drive.followTrajectorySequence(towallcube);
         RaiseArm(80);
         servospate.setPosition(0);
         LowerArm(29);
 
         drive.followTrajectorySequence(park);
+
+        /*
+        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(0.00, -38.40, Math.toRadians(270.00)))
+.splineTo(new Vector2d(25.80, -58.54), Math.toRadians(0.00))
+.splineTo(new Vector2d(32.67, -37.15), Math.toRadians(65.93))
+.splineTo(new Vector2d(48.77, -9.70), Math.toRadians(0.00))
+.lineToConstantHeading(new Vector2d(48.90, -48.51))
+.splineToLinearHeading(new Pose2d(60.38, -57.75, Math.toRadians(90.00)), Math.toRadians(270.00))
+.build();
+
+         */
     }
 }

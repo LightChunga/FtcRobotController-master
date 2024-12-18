@@ -102,6 +102,7 @@ public class BlueLeft extends LinearOpMode {
         if (isStopRequested()) return;
 
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(90.00)))
+                .waitSeconds(4)
                 .lineToConstantHeading(new Vector2d(0, 38.4))
                 .build();
 
@@ -140,7 +141,6 @@ public class BlueLeft extends LinearOpMode {
                 .turn(90)
                 .lineToConstantHeading(new Vector2d(-24.00, 57.00))
                 .build();
-
         //towall2
 
         TrajectorySequence park = drive.trajectorySequenceBuilder(new Pose2d(0, 38.40, Math.toRadians(90.00)))
@@ -156,13 +156,13 @@ public class BlueLeft extends LinearOpMode {
         LowerArm(29);
 
         drive.followTrajectorySequence(firstcube);
-        servospate.setPosition(0.23);
+        /*servospate.setPosition(0.23);
         drive.followTrajectorySequence(towall2);
         RaiseArm(70);
         drive.followTrajectorySequence(towallcube);
         RaiseArm(80);
         servospate.setPosition(0);
-        LowerArm(29);
+        LowerArm(29);*/
 
         /*drive.followTrajectorySequence(secondcube);
         servospate.setPosition(0.12);

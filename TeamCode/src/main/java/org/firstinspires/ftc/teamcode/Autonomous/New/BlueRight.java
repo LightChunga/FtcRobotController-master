@@ -106,6 +106,7 @@ public class BlueRight extends LinearOpMode {
 
         //ToDo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(24.00, 60.00, Math.toRadians(90.00)))
+                .waitSeconds(5.25)
                 .lineToConstantHeading(new Vector2d(8.00, 38.40))
                 .build();
 
