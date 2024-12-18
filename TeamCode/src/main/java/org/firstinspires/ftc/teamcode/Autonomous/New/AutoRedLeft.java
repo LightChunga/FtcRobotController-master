@@ -94,7 +94,7 @@ public class AutoRedLeft extends LinearOpMode {
         sliderleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        servospate.setPosition(0.23);
+        servospate.setPosition(0.45);
 
         //ToDo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
@@ -109,7 +109,7 @@ public class AutoRedLeft extends LinearOpMode {
                     sliderleft.setPower(0.9);
                     sliderright.setPower(0.9);
                 })
-                .lineToConstantHeading(new Vector2d(-8.0, -38.40))
+                .lineToConstantHeading(new Vector2d(-8.0, -40))
                 .addDisplacementMarker(() -> {
                     sliderleft.setTargetPosition(encpts(80));
                     sliderleft.setTargetPosition(encpts(80));
