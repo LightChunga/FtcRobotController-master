@@ -126,8 +126,8 @@ public class AutoRedLeft extends LinearOpMode {
                 })
                 .build();
 
-        TrajectorySequence towalltest = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
-                .lineToConstantHeading(new Vector2d(-8.0, -40))
+        TrajectorySequence test = drive.trajectorySequenceBuilder(new Pose2d(-24, -60, Math.toRadians(90.00)))
+                .splineTo(new Vector2d(0.00, -47.88), Math.toRadians(38.10))
                 .build();
 
         TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -38.40, Math.toRadians(270.00)))
@@ -154,8 +154,8 @@ public class AutoRedLeft extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-       drive.setPoseEstimate(towalltest.start());
+       drive.setPoseEstimate(test.start());
 
-        drive.followTrajectorySequence(towalltest);
+       drive.followTrajectorySequence(test);
     }
 }
