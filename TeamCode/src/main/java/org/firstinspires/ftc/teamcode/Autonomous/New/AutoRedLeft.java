@@ -109,8 +109,8 @@ public class AutoRedLeft extends LinearOpMode {
                     sliderleft.setPower(0.9);
                     sliderright.setPower(0.9);
                 })
-                .lineToConstantHeading(new Vector2d(-8.0, -40))
-                .addDisplacementMarker(() -> {
+                .lineToConstantHeading(new Vector2d(-8.0, -38.4))
+                /*.addDisplacementMarker(() -> {
                     sliderleft.setTargetPosition(encpts(80));
                     sliderleft.setTargetPosition(encpts(80));
 
@@ -123,7 +123,7 @@ public class AutoRedLeft extends LinearOpMode {
                 .waitSeconds(1)
                 .addDisplacementMarker(() -> {
                     servospate.setPosition(0);
-                })
+                })*/
                 .build();
 
         TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -38.40, Math.toRadians(270.00)))
