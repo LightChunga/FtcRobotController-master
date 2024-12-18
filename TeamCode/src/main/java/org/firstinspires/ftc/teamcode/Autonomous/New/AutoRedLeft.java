@@ -27,6 +27,11 @@ public class AutoRedLeft extends LinearOpMode {
     final double pcm = 72;
     final double rp = Math.sqrt(6) - Math.sqrt(2);
     final double L0 = 29;
+
+    int encpts(double h0) {
+        double dif_h = rp * h0 - L0;
+        return -(int)pcm * (int)dif_h;
+    }
     public void RaiseArm(double h0) {
         double dif_h = rp * h0 - L0;
 
@@ -78,8 +83,6 @@ public class AutoRedLeft extends LinearOpMode {
 
         sliderright = hardwareMap.get(DcMotorEx.class, "SliderRight");
 
-        encoder_arm = hardwareMap.get(DcMotorEx.class, "armencoder");
-
         encoder_arm.setDirection(DcMotorSimple.Direction.REVERSE);
         encoder_arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -98,7 +101,29 @@ public class AutoRedLeft extends LinearOpMode {
 
         //ToDo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
+                .addDisplacementMarker(() -> {
+                    servospate.setPosition(0.47);
+                    sliderleft.setTargetPosition(encpts(60));
+                    sliderright.setTargetPosition(encpts(60));
+
+                    sliderleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    sliderright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    sliderleft.setPower(0.9);
+                    sliderright.setPower(0.9);
+                })
                 .lineToConstantHeading(new Vector2d(-8.0, -38.40))
+                .addDisplacementMarker(() -> {
+                    sliderleft.setTargetPosition(encpts(80));
+                    sliderleft.setTargetPosition(encpts(80));
+
+                    sliderleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    sliderright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    sliderleft.setPower(0.9);
+                    sliderright.setPower(0.9);
+                })
+                .waitSeconds(1)
                 .build();
 
         TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -38.40, Math.toRadians(270.00)))
@@ -128,21 +153,5 @@ public class AutoRedLeft extends LinearOpMode {
        drive.setPoseEstimate(towall.start());
 
         drive.followTrajectorySequence(towall);
-
-        RaiseArm(80);
-        //sleep(8000);
-        servospate.setPosition(0);
-        sleep(200);
-        LowerArm(29);
-
-        drive.followTrajectorySequence(firstcube);
-        telemetry.addData("firstcube", 1);
-        telemetry.update();
-        drive.followTrajectorySequence(secondcube);
-        telemetry.addData("secondcube", 1);
-        telemetry.update();
-        drive.followTrajectorySequence(thirdcube);
-        telemetry.addData("thirdcube", 1);
-        telemetry.update();
     }
 }
