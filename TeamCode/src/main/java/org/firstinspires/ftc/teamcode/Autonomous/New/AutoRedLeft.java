@@ -19,6 +19,8 @@ import org.firstinspires.ftc.teamcode.Autonomous.New.Util.Utils;
 public class AutoRedLeft extends LinearOpMode {
 
     ServoImplEx servospate = null;
+
+    ServoImplEx servobk = null;
     DcMotorEx sliderleft = null;
     DcMotorEx sliderright = null;
     DcMotorEx encoder_arm = null;
@@ -78,6 +80,7 @@ public class AutoRedLeft extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         servospate = hardwareMap.get(ServoImplEx.class, "servospate");
+        servobk = hardwareMap.get(ServoImplEx.class, "servosbk");
 
         sliderleft = hardwareMap.get(DcMotorEx.class, "SliderLeft");
 
@@ -102,7 +105,7 @@ public class AutoRedLeft extends LinearOpMode {
         //ToDo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
                 .addDisplacementMarker(() -> {
-                    servospate.setPosition(0.47);
+                    servobk.setPosition(0.47);
                     sliderleft.setTargetPosition(encpts(60));
                     sliderright.setTargetPosition(encpts(60));
 
@@ -124,6 +127,9 @@ public class AutoRedLeft extends LinearOpMode {
                     sliderright.setPower(0.9);
                 })
                 .waitSeconds(1)
+                .addDisplacementMarker(() -> {
+                    servospate.setPosition(0);
+                })
                 .build();
 
         TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -38.40, Math.toRadians(270.00)))
