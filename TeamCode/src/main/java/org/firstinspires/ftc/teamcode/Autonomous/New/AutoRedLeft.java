@@ -30,8 +30,8 @@ public class AutoRedLeft extends LinearOpMode {
     final double rp = Math.sqrt(6) - Math.sqrt(2);
     final double L0 = 29;
 
-    int encpts(double h0) {
-        double dif_h = rp * h0 - L0;
+    int encpts(double h0_cm) {
+        double dif_h = rp * h0_cm - L0;
         return -(int)pcm * (int)dif_h;
     }
     public void RaiseArm(double h0) {
@@ -126,6 +126,10 @@ public class AutoRedLeft extends LinearOpMode {
                 })
                 .build();
 
+        TrajectorySequence towalltest = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
+                .lineToConstantHeading(new Vector2d(-8.0, -40))
+                .build();
+
         TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -38.40, Math.toRadians(270.00)))
                 .splineTo(new Vector2d(-37.77, -40.80), Math.toRadians(90.00))
                 .splineTo(new Vector2d(-47.45, -9.75), Math.toRadians(180.00))
@@ -150,8 +154,8 @@ public class AutoRedLeft extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-       drive.setPoseEstimate(towall.start());
+       drive.setPoseEstimate(towalltest.start());
 
-        drive.followTrajectorySequence(towall);
+        drive.followTrajectorySequence(towalltest);
     }
 }
