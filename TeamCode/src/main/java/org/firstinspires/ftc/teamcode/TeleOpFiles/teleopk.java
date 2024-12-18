@@ -41,7 +41,6 @@ public class teleopk extends LinearOpMode {
         sliderleft = hardwareMap.get(DcMotorEx.class, "SliderLeft");
         sliderright = hardwareMap.get(DcMotorEx.class, "SliderRight");
         actuator = hardwareMap.get(DcMotorEx.class, "Pivot");
-        encoder_arm = hardwareMap.get(DcMotorEx.class, "armencoder");
 
         claw = hardwareMap.get(ServoImplEx.class, "claw"); //hook
         bclaw = hardwareMap.get(ServoImplEx.class, "bclaw");
@@ -191,7 +190,8 @@ public class teleopk extends LinearOpMode {
             telemetry.addData("servo spate:" , servobk.getPosition());
             telemetry.addData("UpPosition Servo: ", claw.getPosition());
             telemetry.addData("Current pivot poz:", actuator.getCurrentPosition());
-            telemetry.addData("arm encoder points: ", encoder_arm.getCurrentPosition());
+            telemetry.addData("right encoder points: ", sliderright.getCurrentPosition());
+            telemetry.addData("left encoder points: ", sliderleft.getCurrentPosition());
             telemetry.update();
         }
     }
