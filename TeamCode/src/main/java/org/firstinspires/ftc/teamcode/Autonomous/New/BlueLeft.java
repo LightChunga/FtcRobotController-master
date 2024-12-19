@@ -129,11 +129,11 @@ public class BlueLeft extends LinearOpMode {
                 .build();
 
         TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-59.00, 56.30, Math.toRadians(270.00)))
-                .splineTo(new Vector2d(-44.68, 21.84), Math.toRadians(306.87))
-                .splineTo(new Vector2d(-66.50, 11.29), Math.toRadians(180.00))
+                .splineTo(new Vector2d(-42.04, 21.98), Math.toRadians(306.87))
+                .splineTo(new Vector2d(-63.82, 11.42), Math.toRadians(180.00))
                 .lineToConstantHeading(new Vector2d(-62.23, 55.37))
                 .lineToConstantHeading(new Vector2d(-46.00, 37.42))
-                .splineToConstantHeading(new Vector2d(-33.33, 8.38), Math.toRadians(0.00))
+                .splineToConstantHeading(new Vector2d(-32.27, 3.89), Math.toRadians(0.00))
                 .build();
 
         drive.setPoseEstimate(towall.start());
