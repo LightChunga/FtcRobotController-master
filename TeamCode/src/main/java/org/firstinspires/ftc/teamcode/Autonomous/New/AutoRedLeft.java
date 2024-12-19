@@ -65,10 +65,10 @@ public class AutoRedLeft extends LinearOpMode {
 
         //ToDo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
-                .lineToConstantHeading(new Vector2d(-6, -40))
+                .lineToConstantHeading(new Vector2d(-8, -41))
                 .build();
 
-        TrajectorySequence tocubes = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -40.00, Math.toRadians(270.00)))
+        TrajectorySequence tocubes = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -41.00, Math.toRadians(270.00)))
                 .splineTo(new Vector2d(-56.11, -43.98), Math.toRadians(70.00))
                 .build();
 
@@ -99,12 +99,12 @@ public class AutoRedLeft extends LinearOpMode {
        drive.setPoseEstimate(towall.start());
 
         setarmheight(80, 1.0);
-        //drive.followTrajectorySequence(towall);
+        drive.followTrajectorySequence(towall);
         while (sliderright.isBusy() && sliderleft.isBusy()) {}
-        sleep(3000);
+        sleep(100);
         servospate.setPosition(0);
         setarmheight(29, -1.0);
+        drive.followTrajectorySequence(tocubes);
         while (sliderright.isBusy() && sliderleft.isBusy()) {}
-        //drive.followTrajectorySequence(tocubes);
     }
 }
