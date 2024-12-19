@@ -104,14 +104,14 @@ public class BlueLeft extends LinearOpMode {
         //todo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(90.00)))
                 .waitSeconds(4)
-                .lineToConstantHeading(new Vector2d(0, 38.4))
+                .lineToConstantHeading(new Vector2d(-8, 37.7))
                 .build();
 
         TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(0, 42.00, Math.toRadians(90.00)))
                 .lineToConstantHeading(new Vector2d(0, 38.40))
                 .build();
 
-        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(0.00, 38.40, Math.toRadians(90.00)))
+        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(-8, 37.7, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-21.16, 56.55), Math.toRadians(180.00))
                 .splineTo(new Vector2d(-40.22, 40.08), Math.toRadians(294.07))
                 .splineTo(new Vector2d(-47.88, 9.17), Math.toRadians(180.00))
@@ -138,6 +138,8 @@ public class BlueLeft extends LinearOpMode {
         RaiseArm(80);
         servospate.setPosition(0);
         LowerArm(29);
+
+
 
         //drive.followTrajectorySequence(firstcube);
     }

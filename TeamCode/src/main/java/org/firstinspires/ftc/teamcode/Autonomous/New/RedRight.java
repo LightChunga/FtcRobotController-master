@@ -103,12 +103,8 @@ public class RedRight extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(8, -37.7))
                 .build();
 
-        TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(0, -42.00, Math.toRadians(270.00)))
-                .lineToConstantHeading(new Vector2d(0, -37.70))
-                .build();
-
         //todo: change starting vals
-        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(0.00, -38.40, Math.toRadians(270.00)))
+        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(8, -37.7, Math.toRadians(270.00)))
                 .splineTo(new Vector2d(25.80, -58.54), Math.toRadians(0.00))
                 .splineTo(new Vector2d(32.67, -37.15), Math.toRadians(65.93))
                 .splineTo(new Vector2d(48.77, -9.70), Math.toRadians(0.00))
