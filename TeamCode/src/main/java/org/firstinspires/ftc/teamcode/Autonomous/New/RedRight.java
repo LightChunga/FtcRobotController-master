@@ -38,10 +38,14 @@ public class RedRight extends LinearOpMode {
         sliderleft.setPower(-0.9);
 
         while(-sliderleft.getCurrentPosition() <= pts) {
-            telemetry.addData("Current Encoder Position: ", -sliderleft.getCurrentPosition());
+            telemetry.addData("Current Encoder Position(right): ", -sliderright.getCurrentPosition());
+            telemetry.addData("Current Encoder Position(left): ", -sliderleft.getCurrentPosition());
             telemetry.addData("Pts: ", pts);
             telemetry.update();
         }
+
+        /*if (isStopRequested())
+            exit(-1);*/
 
         sliderright.setPower(0);
         sliderleft.setPower(0);
@@ -58,6 +62,10 @@ public class RedRight extends LinearOpMode {
         sliderleft.setPower(0.9);
 
         while(-sliderleft.getCurrentPosition() >= pts) {
+            telemetry.addData("Current Encoder Position(right): ", -sliderright.getCurrentPosition());
+            telemetry.addData("Current Encoder Position(left): ", -sliderleft.getCurrentPosition());
+            telemetry.addData("Pts: ", pts);
+            telemetry.update();
         }
 
         /*if (isStopRequested())

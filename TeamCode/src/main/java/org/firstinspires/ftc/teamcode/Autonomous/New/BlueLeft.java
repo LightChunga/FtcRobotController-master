@@ -39,7 +39,8 @@ public class BlueLeft extends LinearOpMode {
         sliderleft.setPower(-0.9);
 
         while(-sliderleft.getCurrentPosition() <= pts) {
-            telemetry.addData("Current Encoder Position: ", -sliderleft.getCurrentPosition());
+            telemetry.addData("Current Encoder Position(right): ", -sliderright.getCurrentPosition());
+            telemetry.addData("Current Encoder Position(left): ", -sliderleft.getCurrentPosition());
             telemetry.addData("Pts: ", pts);
             telemetry.update();
         }
@@ -61,8 +62,9 @@ public class BlueLeft extends LinearOpMode {
         sliderright.setPower(0.9);
         sliderleft.setPower(0.9);
 
-        while(-sliderright.getCurrentPosition() >= pts) {
-            telemetry.addData("Current Encoder Position: ", -sliderright.getCurrentPosition());
+        while(-sliderleft.getCurrentPosition() >= pts) {
+            telemetry.addData("Current Encoder Position(right): ", -sliderright.getCurrentPosition());
+            telemetry.addData("Current Encoder Position(left): ", -sliderleft.getCurrentPosition());
             telemetry.addData("Pts: ", pts);
             telemetry.update();
         }
@@ -139,6 +141,7 @@ public class BlueLeft extends LinearOpMode {
         RaiseArm(80);
         servospate.setPosition(0);
         LowerArm(29);
+        sleep(5000);
 
         drive.followTrajectorySequence(firstcube1);
         drive.followTrajectorySequence(secondcube);
