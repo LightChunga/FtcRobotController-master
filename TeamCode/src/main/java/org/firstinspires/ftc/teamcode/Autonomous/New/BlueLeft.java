@@ -125,16 +125,16 @@ public class BlueLeft extends LinearOpMode {
                 .splineTo(new Vector2d(-42.82, 32.86), Math.toRadians(263.27))
                 .splineTo(new Vector2d(-57.27, 13.79), Math.toRadians(180.00))
                 .lineToConstantHeading(new Vector2d(-59.00, 56.30))
-                .turn(180)
+                //.turn(180)
                 .build();
 
-
-        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-59.00, 56.30, Math.toRadians(0.00)))
-                .splineToConstantHeading(new Vector2d(-62.90, 13.79), Math.toRadians(180.00))
-                .lineToConstantHeading(new Vector2d(-62.61, 59.29))
-                .splineTo(new Vector2d(-29.39, 9.17), Math.toRadians(0.00))
+        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-59.00, 56.30, Math.toRadians(270.00)))
+                .splineTo(new Vector2d(-44.68, 21.84), Math.toRadians(306.87))
+                .splineTo(new Vector2d(-66.50, 11.29), Math.toRadians(180.00))
+                .lineToConstantHeading(new Vector2d(-62.23, 55.37))
+                .lineToConstantHeading(new Vector2d(-46.00, 37.42))
+                .splineToConstantHeading(new Vector2d(-33.33, 8.38), Math.toRadians(0.00))
                 .build();
-
 
         drive.setPoseEstimate(towall.start());
 
@@ -142,7 +142,7 @@ public class BlueLeft extends LinearOpMode {
         RaiseArm(80);
         servospate.setPosition(0);
         LowerArm(29);
-        sleep(5000);
+        //sleep(5000);
 
         drive.followTrajectorySequence(firstcube1);
         drive.followTrajectorySequence(secondcube);
