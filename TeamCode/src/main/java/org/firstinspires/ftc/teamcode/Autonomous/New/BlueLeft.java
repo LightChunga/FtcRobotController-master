@@ -17,6 +17,8 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 public class BlueLeft extends LinearOpMode {
 
     ServoImplEx servospate = null;
+
+    ServoImplEx servobk = null;
     DcMotorEx sliderleft = null;
     DcMotorEx sliderright = null;
     DcMotorEx encoder_arm = null;
@@ -74,7 +76,8 @@ public class BlueLeft extends LinearOpMode {
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        servospate = hardwareMap.get(ServoImplEx.class, "servospate");
+        servospate = hardwareMap.get(ServoImplEx.class, "claw2");
+        servobk = hardwareMap.get(ServoImplEx.class, "servobk");
 
         sliderleft = hardwareMap.get(DcMotorEx.class, "SliderLeft");
 
@@ -95,7 +98,8 @@ public class BlueLeft extends LinearOpMode {
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         actuator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        servospate.setPosition(0.23);
+        servospate.setPosition(0.45); //where the cube is
+        servobk.setPosition(0.53);
 
         waitForStart();
 
@@ -103,15 +107,14 @@ public class BlueLeft extends LinearOpMode {
 
         //todo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(90.00)))
-                .waitSeconds(4)
-                .lineToConstantHeading(new Vector2d(-8, 37.7))
+                .lineToConstantHeading(new Vector2d(-8, 39))
                 .build();
 
         TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(0, 42.00, Math.toRadians(90.00)))
                 .lineToConstantHeading(new Vector2d(0, 38.40))
                 .build();
 
-        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(-8, 37.7, Math.toRadians(90.00)))
+        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(-8, 39, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-21.16, 56.55), Math.toRadians(180.00))
                 .splineTo(new Vector2d(-40.22, 40.08), Math.toRadians(294.07))
                 .splineTo(new Vector2d(-47.88, 9.17), Math.toRadians(180.00))
@@ -135,12 +138,12 @@ public class BlueLeft extends LinearOpMode {
         drive.setPoseEstimate(towall.start());
 
         drive.followTrajectorySequence(towall);
-        RaiseArm(80);
+        RaiseArm(70);
         servospate.setPosition(0);
         LowerArm(29);
 
-
-
-        //drive.followTrajectorySequence(firstcube);
+        drive.followTrajectorySequence(firstcube1);
+        drive.followTrajectorySequence(secondcube);
+        drive.followTrajectorySequence(thirdcube);
     }
 }

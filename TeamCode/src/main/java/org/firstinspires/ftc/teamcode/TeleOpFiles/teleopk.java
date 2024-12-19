@@ -143,9 +143,9 @@ public class teleopk extends LinearOpMode {
             }
 
             if(su && !sd) {
-                servobk.setPosition(0.0);//poz gheara spate transfer
+                servobk.setPosition(0.1);//poz gheara spate transfer
             }else if (!su && sd){
-                servobk.setPosition(0.57);//poz gheara spate punctat
+                servobk.setPosition(0.6);//poz gheara spate punctat
             }
 
             if (a && !b) {
@@ -156,20 +156,20 @@ public class teleopk extends LinearOpMode {
 //
             if (upservo && !downservo) {
                 bclaw.setPosition(0.02);//preluare
-                servospate.setPosition(0.1); //poz preluare
+                servospate.setPosition(0.18);//poz preluare
             } else if (!upservo && downservo) {
                 bclaw.setPosition(0.7);//transfer
                 claw2.setPosition(0.0);//gheara spate deschis
-                servospate.setPosition(0.0); //pozitie transfer
+                servospate.setPosition(0.02); //pozitie transfer
 
-                servobk.setPosition(0.0);//poz gheara spate transfer
+                servobk.setPosition(0.1);//poz gheara spate transfer
             }
 
             if (actup && !actdown) {
                 actuator.setPower(0.4);//extindere intake
             }
             else if (!actup && actdown) {
-                actuator.setPower(-0.3);//retragere intake
+                actuator.setPower(-0.6);//retragere intake
             } else if (!actup && !actdown)
                 actuator.setPower(0);
 

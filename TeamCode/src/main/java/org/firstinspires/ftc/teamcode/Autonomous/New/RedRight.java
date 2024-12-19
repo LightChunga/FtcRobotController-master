@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 public class RedRight extends LinearOpMode {
 
     ServoImplEx servospate = null;
+    ServoImplEx servobk = null;
     DcMotorEx sliderleft = null;
     DcMotorEx sliderright = null;
     DcMotorEx encoder_arm = null;
@@ -71,7 +72,8 @@ public class RedRight extends LinearOpMode {
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        servospate = hardwareMap.get(ServoImplEx.class, "servospate");
+        servospate = hardwareMap.get(ServoImplEx.class, "claw2");
+        servobk = hardwareMap.get(ServoImplEx.class, "servobk");
 
         sliderleft = hardwareMap.get(DcMotorEx.class, "SliderLeft");
 
@@ -125,7 +127,7 @@ public class RedRight extends LinearOpMode {
 
         drive.setPoseEstimate(towall.start());
         drive.followTrajectorySequence(towall);
-        RaiseArm(80);
+        RaiseArm(70);
         servospate.setPosition(0);
         LowerArm(29);
 
