@@ -27,7 +27,7 @@ public class AutoRedLeft extends LinearOpMode {
     final double rp = Math.sqrt(6) - Math.sqrt(2);
     final double L0 = 29;
 
-    void setarmheight(double cm) {
+    void setarmheight(double cm, double pow) {
         double dif_h = rp * cm - L0;
         int pts = -(int)pcm * (int)dif_h;
 
@@ -37,8 +37,8 @@ public class AutoRedLeft extends LinearOpMode {
         sliderleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         sliderright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        sliderleft.setPower(1.0);
-        sliderright.setPower(1.0);
+        sliderleft.setPower(pow);
+        sliderright.setPower(pow);
     }
 
     @Override
@@ -98,11 +98,12 @@ public class AutoRedLeft extends LinearOpMode {
 
        drive.setPoseEstimate(towall.start());
 
-        setarmheight(80);
+        setarmheight(80, 1.0);
         //drive.followTrajectorySequence(towall);
         while (sliderright.isBusy() && sliderleft.isBusy()) {}
+        sleep(3000);
         servospate.setPosition(0);
-        setarmheight(29);
-        drive.followTrajectorySequence(tocubes);
+        setarmheight(29, -1.0);
+        //drive.followTrajectorySequence(tocubes);
     }
 }
