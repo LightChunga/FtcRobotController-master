@@ -62,17 +62,18 @@ public class AutoRedLeft extends LinearOpMode {
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         servospate.setPosition(0.45);
+        servobk.setPosition(0.47);
 
         //ToDo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
-                .lineToConstantHeading(new Vector2d(-8, -41))
+                .lineToConstantHeading(new Vector2d(-8, -37.80))
                 .build();
 
-        TrajectorySequence tocubes = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -41.00, Math.toRadians(270.00)))
+        TrajectorySequence tocubes = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -37.8, Math.toRadians(270.00)))
                 .splineTo(new Vector2d(-56.11, -43.98), Math.toRadians(70.00))
                 .build();
 
-        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-6.00, -40, Math.toRadians(270.00)))
+        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-6.00, -38, Math.toRadians(270.00)))
                 .splineTo(new Vector2d(-37.77, -40.80), Math.toRadians(90.00))
                 .splineTo(new Vector2d(-47.45, -9.75), Math.toRadians(180.00))
                 .lineTo(new Vector2d(-48, -60))
@@ -103,8 +104,9 @@ public class AutoRedLeft extends LinearOpMode {
         while (sliderright.isBusy() && sliderleft.isBusy()) {}
         sleep(100);
         servospate.setPosition(0);
+        servobk.setPosition(0);
         setarmheight(29, -1.0);
-        drive.followTrajectorySequence(tocubes);
+        //drive.followTrajectorySequence(tocubes);
         while (sliderright.isBusy() && sliderleft.isBusy()) {}
     }
 }
