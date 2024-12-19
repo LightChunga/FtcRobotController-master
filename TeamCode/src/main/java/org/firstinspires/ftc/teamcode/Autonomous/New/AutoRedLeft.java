@@ -104,6 +104,7 @@ public class AutoRedLeft extends LinearOpMode {
         sleep(3000);
         servospate.setPosition(0);
         setarmheight(29, -1.0);
+        while (sliderright.isBusy() && sliderleft.isBusy()) {}
         //drive.followTrajectorySequence(tocubes);
     }
 }
