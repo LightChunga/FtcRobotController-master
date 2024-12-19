@@ -19,14 +19,19 @@ import org.firstinspires.ftc.teamcode.Autonomous.New.Util.Utils;
 @Autonomous
 public class AutoRedLeft extends LinearOpMode {
     ServoImplEx servospate = null;
+    ServoImplEx clawrot = null;
+    ServoImplEx claw_arm = null;
+    ServoImplEx claw = null;
     ServoImplEx servobk = null;
     DcMotorEx sliderleft = null;
     DcMotorEx sliderright = null;
+    DcMotorEx actuator = null;
 
     //ToDo: tune this later
     final double pcm = 72;
     final double rp = Math.sqrt(6) - Math.sqrt(2);
     final double L0 = 29;
+    final double pivcm = 8.722;
 
     void setarmheight(double cm, double pow) {
         double dif_h = rp * cm - L0;
@@ -40,6 +45,13 @@ public class AutoRedLeft extends LinearOpMode {
 
         sliderleft.setPower(pow);
         sliderright.setPower(pow);
+    }
+
+    void pivot(double cm) {
+        int pts = (int)(cm * pivcm);
+        actuator.setTargetPosition(pts);
+        actuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        actuator.setPower(1.0);
     }
 
     public void RaiseArm(double h0, Telemetry telemetry) {
@@ -90,9 +102,13 @@ public class AutoRedLeft extends LinearOpMode {
         servospate = hardwareMap.get(ServoImplEx.class, "claw2");
         servobk = hardwareMap.get(ServoImplEx.class, "servobk");
 
-        sliderleft = hardwareMap.get(DcMotorEx.class, "SliderLeft");
+        clawrot = hardwareMap.get(ServoImplEx.class, "servospate");
+        claw_arm = hardwareMap.get(ServoImplEx.class, "bclaw");
+        claw = hardwareMap.get(ServoImplEx.class, "claw");
 
+        sliderleft = hardwareMap.get(DcMotorEx.class, "SliderLeft");
         sliderright = hardwareMap.get(DcMotorEx.class, "SliderRight");
+        actuator = hardwareMap.get(DcMotorEx.class, "Pivot");
 
         sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sliderright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -102,8 +118,8 @@ public class AutoRedLeft extends LinearOpMode {
         sliderleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        servospate.setPosition(0.45);
-        servobk.setPosition(0.47);
+        servospate.setPosition(0.45); //where the cube is
+        servobk.setPosition(0.47); //tilt the claw at a 75 degree angle
 
         //ToDo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
@@ -114,6 +130,9 @@ public class AutoRedLeft extends LinearOpMode {
                 .splineTo(new Vector2d(-48.31, -43.98), Math.toRadians(90.00))
                 .build();
 
+        TrajectorySequence nfirstcube = drive.trajectorySequenceBuilder(new Pose2d(-48.31, -43.98, Math.toRadians(90.00)))
+                .lineToConstantHeading(new Vector2d(-58.28, -43.84))
+                .build();
 
         TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-6.00, -40, Math.toRadians(270.00)))
                 .splineTo(new Vector2d(-37.77, -40.80), Math.toRadians(90.00))
@@ -149,6 +168,27 @@ public class AutoRedLeft extends LinearOpMode {
         LowerArm(29, telemetry);
 
         drive.followTrajectorySequence(tocubes);
+
+        pivot(10);
+        while(actuator.isBusy()) {}
+
+        claw_arm.setPosition(0.02); //0.7
+        clawrot.setPosition(0.1); // 0
+        claw.setPosition(0.35); // 0
+
+        claw_arm.setPosition(0.7); //0.7
+        clawrot.setPosition(0.0);
+
+        pivot(0);
+
+        servospate.setPosition(45);
+        setarmheight(120, 0.7);
+        while (sliderright.isBusy() && sliderleft.isBusy()) {}
+
+        servobk.setPosition(0.57);
+        servospate.setPosition(0.0);
+
+        setarmheight(29, -0.7);
 
         /*while (sliderright.isBusy() && sliderleft.isBusy()) {}
         sleep(100);

@@ -101,6 +101,7 @@ public class BlueLeft extends LinearOpMode {
 
         if (isStopRequested()) return;
 
+        //todo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(90.00)))
                 .waitSeconds(4)
                 .lineToConstantHeading(new Vector2d(0, 38.4))
@@ -110,43 +111,26 @@ public class BlueLeft extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(0, 38.40))
                 .build();
 
-        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-0.00, 38.40, Math.toRadians(90.00)))
-                .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
-                .splineTo(new Vector2d(-46.87, 5.71), Math.toRadians(180.00))
-                .lineTo(new Vector2d(-47.16, 56.69))
-                .splineToLinearHeading(new Pose2d(-54.69, 47.65, Math.toRadians(270.00)), Math.toRadians(227.11))
-                .splineToConstantHeading(new Vector2d(-60.0, 57), Math.toRadians(90.00))
-                .lineToConstantHeading(new Vector2d(-24.00, 57.00))
+        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(0.00, 38.40, Math.toRadians(90.00)))
+                .splineTo(new Vector2d(-21.16, 56.55), Math.toRadians(180.00))
+                .splineTo(new Vector2d(-40.22, 40.08), Math.toRadians(294.07))
+                .splineTo(new Vector2d(-47.88, 9.17), Math.toRadians(180.00))
+                .lineToConstantHeading(new Vector2d(-47.74, 55.10))
                 .build();
 
-        //applied twice
-        TrajectorySequence towall2 = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 57.00, Math.toRadians(270.00)))
-                .lineToLinearHeading(new Pose2d(0, 42.00, Math.toRadians(90.00)))
+        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(-47.74, 55.10, Math.toRadians(180.00)))
+                .splineTo(new Vector2d(-42.82, 32.86), Math.toRadians(263.27))
+                .splineTo(new Vector2d(-57.27, 13.79), Math.toRadians(180.00))
+                .lineToConstantHeading(new Vector2d(-59.00, 56.30))
                 .build();
 
-        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(-0.00, 38.40, Math.toRadians(90.00)))
-                .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
-                .splineTo(new Vector2d(-57.64, 12.74), Math.toRadians(180.00))
-                .lineToConstantHeading(new Vector2d(-60.00, 57.00))
-                .turn(90)
-                .lineToConstantHeading(new Vector2d(-24.00, 57.00))
+
+        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-59.00, 56.30, Math.toRadians(270.00)))
+                .splineTo(new Vector2d(-62.61, 14.23), Math.toRadians(180.00))
+                .lineToConstantHeading(new Vector2d(-62.32, 56.26))
+                .lineToConstantHeading(new Vector2d(-31.70, 10.90))
                 .build();
 
-        //towall2
-
-        TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-0.00, 38.40, Math.toRadians(90.00)))
-                .splineTo(new Vector2d(-27.37, 38.78), Math.toRadians(180.93))
-                .splineTo(new Vector2d(-60.88, 11.89), Math.toRadians(180.00))
-                .lineToConstantHeading(new Vector2d(-60.00, 58.00))
-                .turn(90)
-                .lineToConstantHeading(new Vector2d(-24.00, 57.00))
-                .build();
-        //towall2
-
-        TrajectorySequence park = drive.trajectorySequenceBuilder(new Pose2d(0, 38.40, Math.toRadians(90.00)))
-                .splineTo(new Vector2d(-42.10, 37.62), Math.toRadians(222.39))
-                .splineToLinearHeading(new Pose2d(-25.78, 10.18, Math.toRadians(270.00)), Math.toRadians(0.00))
-                .build();
 
         drive.setPoseEstimate(towall.start());
 
@@ -155,33 +139,6 @@ public class BlueLeft extends LinearOpMode {
         servospate.setPosition(0);
         LowerArm(29);
 
-        drive.followTrajectorySequence(firstcube);
-        /*servospate.setPosition(0.23);
-        drive.followTrajectorySequence(towall2);
-        RaiseArm(70);
-        drive.followTrajectorySequence(towallcube);
-        RaiseArm(80);
-        servospate.setPosition(0);
-        LowerArm(29);*/
-
-        /*drive.followTrajectorySequence(secondcube);
-        servospate.setPosition(0.12);
-        drive.followTrajectorySequence(towall2);
-        RaiseArm(70);
-        drive.followTrajectorySequence(towallcube);
-        RaiseArm(80);
-        servospate.setPosition(0);
-        LowerArm(29);
-
-        drive.followTrajectorySequence(thirdcube);
-        servospate.setPosition(0.12);
-        drive.followTrajectorySequence(towall2);
-        RaiseArm(70);
-        drive.followTrajectorySequence(towallcube);
-        RaiseArm(80);
-        servospate.setPosition(0);
-        LowerArm(29);*/
-
-        drive.followTrajectorySequence(park);
+        //drive.followTrajectorySequence(firstcube);
     }
 }
