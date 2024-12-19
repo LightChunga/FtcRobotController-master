@@ -169,7 +169,7 @@ public class AutoRedLeft extends LinearOpMode {
 
         drive.followTrajectorySequence(tocubes);
 
-        pivot(10);
+        /*pivot(10);
         while(actuator.isBusy()) {}
 
         claw_arm.setPosition(0.02); //0.7
@@ -188,7 +188,7 @@ public class AutoRedLeft extends LinearOpMode {
         servobk.setPosition(0.57);
         servospate.setPosition(0.0);
 
-        setarmheight(29, -0.7);
+        setarmheight(29, -0.7);*/
 
         /*while (sliderright.isBusy() && sliderleft.isBusy()) {}
         sleep(100);
