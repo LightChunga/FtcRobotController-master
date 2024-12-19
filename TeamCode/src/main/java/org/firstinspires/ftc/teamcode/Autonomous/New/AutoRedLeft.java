@@ -110,9 +110,10 @@ public class AutoRedLeft extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(-8, -37.7))
                 .build();
 
-        TrajectorySequence tocubes = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -37.7, Math.toRadians(270.00)))
-                .splineTo(new Vector2d(-56.11, -43.98), Math.toRadians(70.00))
+        TrajectorySequence tocubes = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -37.70, Math.toRadians(270.00)))
+                .splineTo(new Vector2d(-48.31, -43.98), Math.toRadians(90.00))
                 .build();
+
 
         TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-6.00, -40, Math.toRadians(270.00)))
                 .splineTo(new Vector2d(-37.77, -40.80), Math.toRadians(90.00))
@@ -148,6 +149,7 @@ public class AutoRedLeft extends LinearOpMode {
         LowerArm(29, telemetry);
 
         drive.followTrajectorySequence(tocubes);
+
         /*while (sliderright.isBusy() && sliderleft.isBusy()) {}
         sleep(100);
         servospate.setPosition(0);
