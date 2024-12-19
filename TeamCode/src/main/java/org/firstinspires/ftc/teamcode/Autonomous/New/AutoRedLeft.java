@@ -119,7 +119,7 @@ public class AutoRedLeft extends LinearOpMode {
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         servospate.setPosition(0.45); //where the cube is
-        servobk.setPosition(0.47); //tilt the claw at a 75 degree angle
+        servobk.setPosition(0.53); //tilt the claw at a 75 degree angle
 
         //ToDo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
@@ -128,6 +128,7 @@ public class AutoRedLeft extends LinearOpMode {
 
         TrajectorySequence tocubes = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -37.70, Math.toRadians(270.00)))
                 .splineTo(new Vector2d(-48.31, -43.98), Math.toRadians(90.00))
+                .turn(Math.toRadians(-45))
                 .build();
 
         TrajectorySequence nfirstcube = drive.trajectorySequenceBuilder(new Pose2d(-48.31, -43.98, Math.toRadians(90.00)))
@@ -179,7 +180,7 @@ public class AutoRedLeft extends LinearOpMode {
         claw_arm.setPosition(0.7); //0.7
         clawrot.setPosition(0.0);
 
-        pivot(0);
+        pivot(4);
 
         servospate.setPosition(45);
         setarmheight(120, 0.7);
