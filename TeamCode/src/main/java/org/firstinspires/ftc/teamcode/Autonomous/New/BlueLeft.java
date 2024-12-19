@@ -21,7 +21,6 @@ public class BlueLeft extends LinearOpMode {
     ServoImplEx servobk = null;
     DcMotorEx sliderleft = null;
     DcMotorEx sliderright = null;
-    DcMotorEx encoder_arm = null;
     DcMotorEx actuator = null;
 
     //ToDo: tune this later
@@ -39,8 +38,8 @@ public class BlueLeft extends LinearOpMode {
         sliderright.setPower(-0.9);
         sliderleft.setPower(-0.9);
 
-        while(-encoder_arm.getCurrentPosition() <= pts) {
-            telemetry.addData("Current Encoder Position: ", -encoder_arm.getCurrentPosition());
+        while(-sliderleft.getCurrentPosition() <= pts) {
+            telemetry.addData("Current Encoder Position: ", -sliderleft.getCurrentPosition());
             telemetry.addData("Pts: ", pts);
             telemetry.update();
         }
@@ -62,7 +61,10 @@ public class BlueLeft extends LinearOpMode {
         sliderright.setPower(0.9);
         sliderleft.setPower(0.9);
 
-        while(-encoder_arm.getCurrentPosition() >= pts) {
+        while(-sliderright.getCurrentPosition() >= pts) {
+            telemetry.addData("Current Encoder Position: ", -sliderright.getCurrentPosition());
+            telemetry.addData("Pts: ", pts);
+            telemetry.update();
         }
 
         /*if (isStopRequested())
@@ -83,11 +85,7 @@ public class BlueLeft extends LinearOpMode {
 
         sliderright = hardwareMap.get(DcMotorEx.class, "SliderRight");
 
-        encoder_arm = hardwareMap.get(DcMotorEx.class, "armencoder");
-
         actuator = hardwareMap.get(DcMotorEx.class, "Pivot");
-
-        encoder_arm.setDirection(DcMotorSimple.Direction.REVERSE);
 
         sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sliderright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -138,7 +136,7 @@ public class BlueLeft extends LinearOpMode {
         drive.setPoseEstimate(towall.start());
 
         drive.followTrajectorySequence(towall);
-        RaiseArm(70);
+        RaiseArm(80);
         servospate.setPosition(0);
         LowerArm(29);
 
