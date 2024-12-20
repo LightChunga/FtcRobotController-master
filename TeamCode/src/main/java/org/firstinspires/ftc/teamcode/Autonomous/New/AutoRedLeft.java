@@ -55,6 +55,13 @@ public class AutoRedLeft extends LinearOpMode {
     }
 
     public void RaiseArm(double h0, Telemetry telemetry) {
+
+        sliderleft.setPower(0);
+        sliderright.setPower(0);
+
+        sliderright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         double dif_h = rp * h0 - L0;
 
         int pts = (int)pcm * (int)dif_h;
@@ -75,6 +82,12 @@ public class AutoRedLeft extends LinearOpMode {
     }
 
     public void LowerArm(double h0, Telemetry telemetry) {
+        sliderleft.setPower(0);
+        sliderright.setPower(0);
+
+        sliderright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         double dif_h = rp * h0 - L0;
 
         int pts = (int)pcm * (int)dif_h;
@@ -127,8 +140,7 @@ public class AutoRedLeft extends LinearOpMode {
                 .build();
 
         TrajectorySequence tocubes = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -37.70, Math.toRadians(270.00)))
-                .splineTo(new Vector2d(-48.31, -43.98), Math.toRadians(90.00))
-                .turn(Math.toRadians(-45))
+                .splineTo(new Vector2d(-48.17, -44.00), Math.toRadians(90.00))
                 .build();
 
         TrajectorySequence nfirstcube = drive.trajectorySequenceBuilder(new Pose2d(-48.31, -43.98, Math.toRadians(90.00)))
@@ -166,9 +178,9 @@ public class AutoRedLeft extends LinearOpMode {
         sleep(500);
         servospate.setPosition(0);
         servobk.setPosition(0);
-        LowerArm(29, telemetry);
-
+        setarmheight(29, -0.7);
         drive.followTrajectorySequence(tocubes);
+        while (sliderleft.isBusy() && sliderright.isBusy()) {}
 
         /*pivot(10);
         while(actuator.isBusy()) {}
