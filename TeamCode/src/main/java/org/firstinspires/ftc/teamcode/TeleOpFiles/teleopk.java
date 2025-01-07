@@ -30,6 +30,7 @@ public class teleopk extends LinearOpMode {
     ServoImplEx claw2 = null;
     ServoImplEx servobk = null;
     ServoImplEx servospate = null;
+    ServoImplEx servobara = null;
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -47,6 +48,7 @@ public class teleopk extends LinearOpMode {
         claw2 = hardwareMap.get(ServoImplEx.class, "claw2");
         servobk = hardwareMap.get(ServoImplEx.class, "servobk");
         servospate = hardwareMap.get(ServoImplEx.class, "servospate");
+        servobara = hardwareMap.get(ServoImplEx.class, "servo_bara");
         rightDrive_fata.setDirection(DcMotorSimple.Direction.REVERSE);
         rightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -130,12 +132,16 @@ public class teleopk extends LinearOpMode {
             leftDrive_fata.setPower(Range.clip(y + x - z, -1, 1)); //
             rightDrive.setPower(Range.clip(y + x+z, -1, 1));
 
-            if(sb1 && !sb2){
+            /*if(sb1 && !sb2){
                 servospate.setPosition(0.1); //poz preluare
             } else if(!sb1 && sb2){
                 servospate.setPosition(0.0); //pozitie transfer
+            }*/
+            if(sb1 && !sb2){
+                servobara.setPosition(0);//deschis
+            }else if(!sb1 && sb2){
+                servobara.setPosition(0.4);//inchis
             }
-
             if(a1 && !b1) {
                 claw2.setPosition(0.0);//gheara spate deschis
             } else if(!a1 && b1) {
@@ -186,12 +192,12 @@ public class teleopk extends LinearOpMode {
                 sliderright.setPower(0);
             }
 
-            telemetry.addData("Motor_power: ", sliderleft.getPower());
-            telemetry.addData("servo spate:" , servobk.getPosition());
-            telemetry.addData("UpPosition Servo: ", claw.getPosition());
-            telemetry.addData("Current pivot poz:", actuator.getCurrentPosition());
-            telemetry.addData("right encoder points: ", sliderright.getCurrentPosition());
-            telemetry.addData("left encoder points: ", sliderleft.getCurrentPosition());
+            telemetry.addData("servospate: ", servospate.getPosition());
+            telemetry.addData("bclaw: ", bclaw.getPosition());
+            telemetry.addData("claw: ", claw.getPosition());
+            telemetry.addData("claw2: ", claw2.getPosition());
+            telemetry.addData("left slide pts: ", sliderleft.getCurrentPosition());
+            telemetry.addData("right slide pts: ", sliderright.getCurrentPosition());
             telemetry.update();
         }
     }

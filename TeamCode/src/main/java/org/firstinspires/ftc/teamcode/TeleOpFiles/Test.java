@@ -16,23 +16,35 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
 public class Test extends LinearOpMode {
     DcMotorEx actuator = null;
 
+    double pivcm = 8.722;
+    void pivot(double cm, double pow) {
+        int pts = (int)(cm * pivcm);
+        actuator.setTargetPosition(pts);
+        actuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        actuator.setPower(pow);
+    }
+
     @Override
     public void runOpMode() throws InterruptedException {
         actuator = hardwareMap.get(DcMotorEx.class, "Pivot");
 
         boolean actup, actdown;
 
+        waitForStart();
+
+        if(isStopRequested()) return;
+
         while (opModeIsActive()) {
             actup = gamepad2.dpad_up;
             actdown = gamepad2.dpad_down;
 
             if (actup && !actdown) {
-                actuator.setTargetPosition(200);
+                actuator.setTargetPosition(-50);
                 actuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 actuator.setPower(0.5);
             }
             else if (!actup && actdown) {
-                actuator.setTargetPosition(100);
+                actuator.setTargetPosition(-100);
                 actuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 actuator.setPower(0.5);
             }

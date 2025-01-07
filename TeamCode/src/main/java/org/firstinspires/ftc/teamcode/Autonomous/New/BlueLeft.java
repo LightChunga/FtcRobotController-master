@@ -107,14 +107,14 @@ public class BlueLeft extends LinearOpMode {
 
         //todo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(90.00)))
-                .lineToConstantHeading(new Vector2d(-8, 39))
+                .lineToConstantHeading(new Vector2d(-8, 37.2))
                 .build();
 
         TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(0, 42.00, Math.toRadians(90.00)))
                 .lineToConstantHeading(new Vector2d(0, 38.40))
                 .build();
 
-        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(-8, 39, Math.toRadians(90.00)))
+        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(-8, 37.2, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-21.16, 56.55), Math.toRadians(180.00))
                 .splineTo(new Vector2d(-40.22, 40.08), Math.toRadians(294.07))
                 .splineTo(new Vector2d(-47.88, 9.17), Math.toRadians(180.00))
@@ -130,10 +130,10 @@ public class BlueLeft extends LinearOpMode {
 
         TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-59.00, 56.30, Math.toRadians(270.00)))
                 .splineTo(new Vector2d(-42.04, 21.98), Math.toRadians(306.87))
-                .splineTo(new Vector2d(-63.82, 11.42), Math.toRadians(180.00))
-                .lineToConstantHeading(new Vector2d(-62.23, 55.37))
+                .splineTo(new Vector2d(-65.00, 11.42), Math.toRadians(180.00))
+                .lineToConstantHeading(new Vector2d(-64.00, 55.37))
                 .lineToConstantHeading(new Vector2d(-46.00, 37.42))
-                .splineToConstantHeading(new Vector2d(-32.27, 3.89), Math.toRadians(0.00))
+                .splineToConstantHeading(new Vector2d(-24.22, 2.18), Math.toRadians(0.00))
                 .build();
 
         drive.setPoseEstimate(towall.start());
@@ -141,11 +141,14 @@ public class BlueLeft extends LinearOpMode {
         drive.followTrajectorySequence(towall);
         RaiseArm(80);
         servospate.setPosition(0);
+        sleep(500);
         LowerArm(29);
         //sleep(5000);
 
         drive.followTrajectorySequence(firstcube1);
         drive.followTrajectorySequence(secondcube);
         drive.followTrajectorySequence(thirdcube);
+
+        RaiseArm(45);
     }
 }
