@@ -176,12 +176,6 @@ public class BlueLeft extends LinearOpMode {
         servobara.setPosition(0.4);
 
         setarmheight(29, 0.8);
-        /*while (sliderright.isBusy()) {
-            telemetry.addData("Slider right: ", sliderright.getCurrentPosition());
-            telemetry.addData("Slider left: ", sliderleft.getCurrentPosition());
-            telemetry.update();
-        }
-        sleep(5000);*/
 
         drive.followTrajectorySequence(firstcube1);
 
@@ -203,6 +197,5 @@ public class BlueLeft extends LinearOpMode {
         servobara.setPosition(0.4);
 
         drive.followTrajectorySequence(secondcube);
-        //drive.followTrajectorySequence(thirdcube);
     }
 }
