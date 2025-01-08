@@ -17,8 +17,8 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 public class BlueLeft extends LinearOpMode {
 
     ServoImplEx servospate = null;
-
     ServoImplEx servobk = null;
+    ServoImplEx servobara = null;
     DcMotorEx sliderleft = null;
     DcMotorEx sliderright = null;
     DcMotorEx actuator = null;
@@ -27,6 +27,28 @@ public class BlueLeft extends LinearOpMode {
     static final double pcm = 72;
     static final double rp = Math.sqrt(6) - Math.sqrt(2);
     static final double L0 = 29;
+    final double pivcm = 8.722;
+
+    void setarmheight(double cm, double pow) {
+        double dif_h = rp * cm - L0;
+        int pts = -(int)pcm * (int)dif_h;
+
+        sliderleft.setTargetPosition(pts);
+        sliderright.setTargetPosition(pts);
+
+        sliderleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sliderright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        sliderleft.setPower(pow);
+        sliderright.setPower(pow);
+    }
+
+    void pivot(double cm, double pow) {
+        int pts = -(int)(cm * pivcm);
+        actuator.setTargetPosition(pts);
+        actuator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        actuator.setPower(pow);
+    }
 
     public void RaiseArm(double h0) {
         double dif_h = rp * h0 - L0;
@@ -82,6 +104,7 @@ public class BlueLeft extends LinearOpMode {
 
         servospate = hardwareMap.get(ServoImplEx.class, "claw2");
         servobk = hardwareMap.get(ServoImplEx.class, "servobk");
+        servobara = hardwareMap.get(ServoImplEx.class, "servo_bara");
 
         sliderleft = hardwareMap.get(DcMotorEx.class, "SliderLeft");
 
@@ -98,8 +121,7 @@ public class BlueLeft extends LinearOpMode {
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         actuator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        servospate.setPosition(0.45); //where the cube is
-        servobk.setPosition(0.53);
+        servobara.setPosition(0);
 
         waitForStart();
 
@@ -107,25 +129,36 @@ public class BlueLeft extends LinearOpMode {
 
         //todo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(90.00)))
-                .lineToConstantHeading(new Vector2d(-8, 37.2))
+                .lineToConstantHeading(new Vector2d(0., 38.1))
                 .build();
 
-        TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(0, 42.00, Math.toRadians(90.00)))
-                .lineToConstantHeading(new Vector2d(0, 38.40))
+        TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(-43.75, 59.00, Math.toRadians(270.00)))
+                .splineToLinearHeading(new Pose2d(0.00, 39.00, Math.toRadians(90.00)), Math.toRadians(270.00))
                 .build();
 
-        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(-8, 37.2, Math.toRadians(90.00)))
+        TrajectorySequence closer = drive.trajectorySequenceBuilder(new Pose2d(0, 39, Math.toRadians(90)))
+                .lineToConstantHeading(new Vector2d(0, 38.1))
+                .build();
+
+        TrajectorySequence closerr = drive.trajectorySequenceBuilder(new Pose2d(0, 39, Math.toRadians(90)))
+                .lineToConstantHeading(new Vector2d(0, 33))
+                .build();
+
+        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(0.00, 38.40, Math.toRadians(90.00)))
                 .splineTo(new Vector2d(-21.16, 56.55), Math.toRadians(180.00))
                 .splineTo(new Vector2d(-40.22, 40.08), Math.toRadians(294.07))
                 .splineTo(new Vector2d(-47.88, 9.17), Math.toRadians(180.00))
                 .lineToConstantHeading(new Vector2d(-47.74, 55.10))
+                .splineToLinearHeading(new Pose2d(-55.24, 46.66, Math.toRadians(-90.00)), Math.toRadians(-70.79))
+                .splineToConstantHeading(new Vector2d(-44.28, 49.96), Math.toRadians(54.00))
+                .lineToConstantHeading(new Vector2d(-43.75, 58.6))
                 .build();
 
-        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(-47.74, 55.10, Math.toRadians(180.00)))
+        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(0, 33, Math.toRadians(90)))
+                .splineTo(new Vector2d(-47.75, 55.00), Math.toRadians(180.00))
                 .splineTo(new Vector2d(-42.82, 32.86), Math.toRadians(263.27))
                 .splineTo(new Vector2d(-57.27, 13.79), Math.toRadians(180.00))
-                .lineToConstantHeading(new Vector2d(-59.00, 56.30))
-                //.turn(180)
+                .lineToConstantHeading(new Vector2d(-59.00, 56.20))
                 .build();
 
         TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(-59.00, 56.30, Math.toRadians(270.00)))
@@ -140,15 +173,36 @@ public class BlueLeft extends LinearOpMode {
 
         drive.followTrajectorySequence(towall);
         RaiseArm(80);
-        servospate.setPosition(0);
-        sleep(500);
-        LowerArm(29);
-        //sleep(5000);
+        servobara.setPosition(0.4);
+
+        setarmheight(29, 0.8);
+        /*while (sliderright.isBusy()) {
+            telemetry.addData("Slider right: ", sliderright.getCurrentPosition());
+            telemetry.addData("Slider left: ", sliderleft.getCurrentPosition());
+            telemetry.update();
+        }
+        sleep(5000);*/
 
         drive.followTrajectorySequence(firstcube1);
-        drive.followTrajectorySequence(secondcube);
-        drive.followTrajectorySequence(thirdcube);
 
-        RaiseArm(45);
+        sliderright.setPower(0);
+        sliderleft.setPower(0);
+        sliderright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        RaiseArm(30.5);
+        servobara.setPosition(0);
+        sleep(1000);
+
+        RaiseArm(32);
+        drive.followTrajectorySequence(towallcube);
+        RaiseArm(75);
+        drive.followTrajectorySequence(closer);
+        setarmheight(29, 0.9);
+        drive.followTrajectorySequence(closerr);
+        servobara.setPosition(0.4);
+
+        drive.followTrajectorySequence(secondcube);
+        //drive.followTrajectorySequence(thirdcube);
     }
 }

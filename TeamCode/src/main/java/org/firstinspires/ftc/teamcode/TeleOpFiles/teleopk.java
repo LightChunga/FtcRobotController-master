@@ -49,6 +49,7 @@ public class teleopk extends LinearOpMode {
         servobk = hardwareMap.get(ServoImplEx.class, "servobk");
         servospate = hardwareMap.get(ServoImplEx.class, "servospate");
         servobara = hardwareMap.get(ServoImplEx.class, "servo_bara");
+
         rightDrive_fata.setDirection(DcMotorSimple.Direction.REVERSE);
         rightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
