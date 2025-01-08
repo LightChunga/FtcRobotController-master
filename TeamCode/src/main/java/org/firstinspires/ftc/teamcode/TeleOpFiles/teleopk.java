@@ -87,7 +87,6 @@ public class teleopk extends LinearOpMode {
         double x, y, z, up, down;
         boolean actup, actdown;
         double deadzone = 0.2;
-        int pos = 0;
         boolean a1,b1,a, b, upservo, downservo, su,sd,sb1,sb2;
 
         telemetry.addData("Current pivot poz:", actuator.getCurrentPosition());
