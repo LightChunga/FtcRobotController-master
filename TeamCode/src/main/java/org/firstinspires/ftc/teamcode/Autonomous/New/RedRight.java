@@ -21,12 +21,26 @@ public class RedRight extends LinearOpMode {
     DcMotorEx sliderleft = null;
     DcMotorEx sliderright = null;
     DcMotorEx actuator = null;
+    ServoImplEx servobara = null;
 
     //ToDo: tune this later
     static final double pcm = 72;
     static final double rp = Math.sqrt(6) - Math.sqrt(2);
     static final double L0 = 29;
 
+    void setarmheight(double cm, double pow) {
+        double dif_h = rp * cm - L0;
+        int pts = -(int)pcm * (int)dif_h;
+
+        sliderleft.setTargetPosition(pts);
+        sliderright.setTargetPosition(pts);
+
+        sliderleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sliderright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        sliderleft.setPower(pow);
+        sliderright.setPower(pow);
+    }
     public void RaiseArm(double h0) {
         double dif_h = rp * h0 - L0;
 
@@ -81,6 +95,7 @@ public class RedRight extends LinearOpMode {
 
         servospate = hardwareMap.get(ServoImplEx.class, "claw2");
         servobk = hardwareMap.get(ServoImplEx.class, "servobk");
+        servobara = hardwareMap.get(ServoImplEx.class, "servo_bara");
 
         sliderleft = hardwareMap.get(DcMotorEx.class, "SliderLeft");
 
@@ -97,8 +112,8 @@ public class RedRight extends LinearOpMode {
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         actuator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        servospate.setPosition(0.45); //where the cube is
-        servobk.setPosition(0.53);
+        servobara.setPosition(0);
+        actuator.setPower(0.07);
 
         waitForStart();
 
@@ -106,22 +121,38 @@ public class RedRight extends LinearOpMode {
 
         //Todo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(24.00, -60.00, Math.toRadians(270.00)))
-                .waitSeconds(5)
-                .lineToConstantHeading(new Vector2d(8, -37.2))
+                .lineToConstantHeading(new Vector2d(0.00, -38.10))
+                .build();
+
+        TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(43.75, -59.00, Math.toRadians(90.00)))
+                .splineToLinearHeading(new Pose2d(0.00, -39.00, Math.toRadians(270.00)), Math.toRadians(90.00))
+                .build();
+
+        TrajectorySequence closer = drive.trajectorySequenceBuilder(new Pose2d(0, -39, Math.toRadians(270)))
+                .lineToConstantHeading(new Vector2d(0, -38.1))
+                .build();
+
+        TrajectorySequence closerr = drive.trajectorySequenceBuilder(new Pose2d(0.00, -39.00, Math.toRadians(270.00)))
+                .lineToConstantHeading(new Vector2d(0.00, -33.00))
                 .build();
 
         //todo: change starting vals
-        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(8.00, -37.20, Math.toRadians(270.00)))
-                .splineTo(new Vector2d(25.80, -58.54), Math.toRadians(0.00))
-                .splineTo(new Vector2d(37.95, -21.71), Math.toRadians(65.93))
-                .splineTo(new Vector2d(46.26, -9.57), Math.toRadians(0.00))
-                .lineToConstantHeading(new Vector2d(48.00, -56.30))
+        TrajectorySequence firstcube1 = drive.trajectorySequenceBuilder(new Pose2d(0.00, -38.40, Math.toRadians(270.00)))
+                .splineTo(new Vector2d(21.16, -56.55), Math.toRadians(0.00))
+                .splineTo(new Vector2d(34.78, -34.78), Math.toRadians(90.00))
+                .splineTo(new Vector2d(46.39, -8.51), Math.toRadians(0.00))
+                .lineToConstantHeading(new Vector2d(49.43, -56.56))
+                .splineToLinearHeading(new Pose2d(55.24, -46.66, Math.toRadians(90.00)), Math.toRadians(90.00))
+                .waitSeconds(2)
+                .splineToConstantHeading(new Vector2d(44.28, -49.96), Math.toRadians(270.00))
+                .lineToConstantHeading(new Vector2d(43.75, -59.3))
                 .build();
 
-        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(48.00, -56.30, Math.toRadians(0.00)))
-                .splineToConstantHeading(new Vector2d(45.07, -9.83), Math.toRadians(0.00))
-                .splineTo(new Vector2d(57.48, -9.44), Math.toRadians(0.00))
-                .lineToConstantHeading(new Vector2d(59.00, -56.30))
+        TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(0.00, -33.00, Math.toRadians(270.00)))
+                .splineTo(new Vector2d(47.75, -55.00), Math.toRadians(0.00))
+                .splineTo(new Vector2d(42.82, -32.86), Math.toRadians(96.73))
+                .splineTo(new Vector2d(57.27, -13.79), Math.toRadians(0.00))
+                .lineToConstantHeading(new Vector2d(59.00, -56.20))
                 .build();
 
         TrajectorySequence thirdcube = drive.trajectorySequenceBuilder(new Pose2d(59.00, -56.30, Math.toRadians(90.00)))
@@ -133,26 +164,32 @@ public class RedRight extends LinearOpMode {
                 .build();
 
         drive.setPoseEstimate(towall.start());
+
         drive.followTrajectorySequence(towall);
         RaiseArm(80);
-        servospate.setPosition(0);
-        LowerArm(29);
+        servobara.setPosition(0.4);
+
+        setarmheight(29, 0.8);
 
         drive.followTrajectorySequence(firstcube1);
+
+        sliderright.setPower(0);
+        sliderleft.setPower(0);
+        sliderright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        RaiseArm(30.5);
+        servobara.setPosition(0);
+        sleep(1000);
+
+        RaiseArm(32);
+        drive.followTrajectorySequence(towallcube);
+        RaiseArm(75);
+        drive.followTrajectorySequence(closer);
+        setarmheight(29, 0.9);
+        drive.followTrajectorySequence(closerr);
+        servobara.setPosition(0.4);
+
         drive.followTrajectorySequence(secondcube);
-        drive.followTrajectorySequence(thirdcube);
-
-        RaiseArm(45);
-
-        /*
-        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(0.00, -38.40, Math.toRadians(270.00)))
-.splineTo(new Vector2d(25.80, -58.54), Math.toRadians(0.00))
-.splineTo(new Vector2d(32.67, -37.15), Math.toRadians(65.93))
-.splineTo(new Vector2d(48.77, -9.70), Math.toRadians(0.00))
-.lineToConstantHeading(new Vector2d(48.90, -48.51))
-.splineToLinearHeading(new Pose2d(60.38, -57.75, Math.toRadians(90.00)), Math.toRadians(270.00))
-.build();
-
-         */
     }
 }
