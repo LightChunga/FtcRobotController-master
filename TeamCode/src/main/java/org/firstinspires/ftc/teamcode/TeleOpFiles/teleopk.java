@@ -180,12 +180,12 @@ public class teleopk extends LinearOpMode {
                 actuator.setPower(0);
 
             if(up>0 && down == 0) {
-                sliderleft.setPower(0.5);
-                sliderright.setPower(0.5);
+                sliderleft.setPower(0.4);
+                sliderright.setPower(0.4);
             }
             else if (down < 0 && up == 0) {
-                sliderleft.setPower(-0.7);
-                sliderright.setPower(-0.7);
+                sliderleft.setPower(-0.8);
+                sliderright.setPower(-0.8);
             }
             else {
                 sliderleft.setPower(0);

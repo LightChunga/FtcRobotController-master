@@ -52,7 +52,24 @@ public class Test extends LinearOpMode {
         mp.put(5, make_pair("claw", "claw")); //claw
         mp.put(6, make_pair("actuator", "actuator")); //Pivot
 
-        for (int i = 0; i < 7; ++i) {
+        actuator = hardwareMap.get(DcMotorEx.class, "Pivot");
+
+        claw = hardwareMap.get(ServoImplEx.class, "claw"); //hook
+        bclaw = hardwareMap.get(ServoImplEx.class, "bclaw");
+        claw2 = hardwareMap.get(ServoImplEx.class, "claw2");
+        servobk = hardwareMap.get(ServoImplEx.class, "servobk");
+        servospate = hardwareMap.get(ServoImplEx.class, "servospate");
+        servobara = hardwareMap.get(ServoImplEx.class, "servo_bara");
+
+        boolean a1,b1,a, b, upservo, downservo, su,sd,sb1,sb2, conf;
+        boolean actup, actdown, config = true, acted = false;
+        int initenc = 0;
+
+        waitForStart();
+
+        if(isStopRequested()) return;
+
+        for (int i = 0; i < 7 && !isStopRequested(); ++i) {
             Boolean first = false, second = false;
             telemetry.addData("Choose variable name (dpad_left/dpad_right)", mp.get(i).f + "/" + mp.get(i).s);
             telemetry.update();
@@ -65,31 +82,23 @@ public class Test extends LinearOpMode {
                     varnm.put(mp.get(i).f, mp.get(i).f);
                 else if (second)
                     varnm.put(mp.get(i).f, mp.get(i).s);
-            } while (first || second);
+            } while (!first && !second);
+            sleep(1000);
         }
 
-        actuator = hardwareMap.get(DcMotorEx.class, "Pivot");
 
-        claw = hardwareMap.get(ServoImplEx.class, "claw"); //hook
-        bclaw = hardwareMap.get(ServoImplEx.class, "bclaw");
-        claw2 = hardwareMap.get(ServoImplEx.class, "claw2");
-        servobk = hardwareMap.get(ServoImplEx.class, "servobk");
-        servospate = hardwareMap.get(ServoImplEx.class, "servospate");
-        servobara = hardwareMap.get(ServoImplEx.class, "servo_bara");
 
-        boolean a1,b1,a, b, upservo, downservo, su,sd,sb1,sb2;
-        boolean actup, actdown, config = true, acted = false;
-        int initenc = 0;
+        while (config && !isStopRequested()) {
+            telemetry.addData("The tuning process", "");
+            telemetry.update();
 
-        if(isStopRequested()) return;
-
-        while (opModeIsActive() && config) {
             boolean pressed = false;
             int enc = -1;
             String aux_command = "";
 
             a1 = gamepad2.a;
             b1 = gamepad2.b;
+            conf = gamepad1.y;
 
             a = gamepad1.a; // servo close/open
             b = gamepad1.b;
@@ -174,29 +183,42 @@ public class Test extends LinearOpMode {
                 actuator.setPower(-0.6);//retragere intake
                 enc = actuator.getCurrentPosition();
                 acted = true;
-            } else if (!actup && !actdown) {
+            } else if (!actup && !actdown && actuator.getPower() != 0) {
                 actuator.setPower(0);
-
-                if ((Math.abs(enc - initenc) > 0) && acted) {
-                    pressed = true;
-                    aux_command = "pivot(" + (actuator.getCurrentPosition() / pivcm) + ");\n";
-                }
+                telemetry.addData("Actuator pwr: ", actuator.getPower());
+                telemetry.update();
+                pressed = true;
+                aux_command = "pivot(" + -actuator.getCurrentPosition()/pivcm + ");\n";
                 acted = false;
             }
 
-            while (pressed) {
+            while (pressed && !isStopRequested()) {
                 telemetry.addData("Register command?(Y/N)(dpad_left/dpad_right): ", aux_command);
                 telemetry.update();
 
-                if (gamepad1.dpad_left) {
+                if (gamepad1.dpad_right) {
                     Lines += aux_command;
                     telemetry.addData("Commend status: ", "Registered");
                     telemetry.update();
                     sleep(1000);
-                } else if (gamepad1.dpad_right) {
+                } else if (gamepad1.dpad_left) {
                     pressed = false;
                 }
             }
+
+            if (conf) {
+                while (config && !isStopRequested()) {
+                    telemetry.addData("Do you want to proceed?", "(Press again to confirm!)");
+                    telemetry.update();
+
+                    config = !conf;
+                }
+            }
+        }
+
+        while (!isStopRequested()) {
+            telemetry.addData(Lines, "Code submitted successfully!");
+            telemetry.update();
         }
     }
 }

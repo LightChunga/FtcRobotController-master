@@ -182,23 +182,14 @@ public class AutoRedLeft extends LinearOpMode {
 
         //drive.setPoseEstimate(towall.start());
 
-        setarmheight(80, -0.6);
+        RaiseArm(80, telemetry);
         //drive.followTrajectorySequence(towall);
 
-        while (sliderleft.isBusy() && sliderright.isBusy() && !isStopRequested()) {
-            telemetry.addData("Sliderleft: ", sliderleft.getCurrentPosition());
-            telemetry.addData("Sliderright: ", sliderright.getCurrentPosition());
-            telemetry.update();
-        }
         servobara.setPosition(0.4);
 
         sleep(2000);
-        setarmheight(29, 0.6);
-        while (sliderleft.isBusy() && sliderright.isBusy() && !isStopRequested()) {
-            telemetry.addData("Sliderleft: ", sliderleft.getCurrentPosition());
-            telemetry.addData("Sliderright: ", sliderright.getCurrentPosition());
-            telemetry.update();
-        }
+        LowerArm(29, telemetry);
+        sleep(2000);
 
         //drive.followTrajectorySequence(firstintake);
 
