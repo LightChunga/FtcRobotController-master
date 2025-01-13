@@ -23,15 +23,16 @@ public class AutoRedLeft extends LinearOpMode {
     ServoImplEx claw_arm = null;
     ServoImplEx claw = null;
     ServoImplEx servobk = null;
+    ServoImplEx servobara = null;
     DcMotorEx sliderleft = null;
     DcMotorEx sliderright = null;
     DcMotorEx actuator = null;
 
     //ToDo: tune this later
-    final double pcm = 72;
+    final double pcm = 31;
     final double rp = Math.sqrt(6) - Math.sqrt(2);
     final double L0 = 29;
-    final double pivcm = 8.722;
+    final double pivcm = 7.7611;
 
     void setarmheight(double cm, double pow) {
         double dif_h = rp * cm - L0;
@@ -124,6 +125,7 @@ public class AutoRedLeft extends LinearOpMode {
         sliderleft = hardwareMap.get(DcMotorEx.class, "SliderLeft");
         sliderright = hardwareMap.get(DcMotorEx.class, "SliderRight");
         actuator = hardwareMap.get(DcMotorEx.class, "Pivot");
+        servobara = hardwareMap.get(ServoImplEx.class, "servo_bara");
 
         sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sliderright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -133,12 +135,15 @@ public class AutoRedLeft extends LinearOpMode {
         sliderleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        servospate.setPosition(0.45); //where the cube is
-        servobk.setPosition(0.53); //tilt the claw at a 75 degree angle
+        servobara.setPosition(0);
 
         //ToDo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
                 .lineToConstantHeading(new Vector2d(-8, -37.9))
+                .build();
+
+        TrajectorySequence firstintake = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -38.10, Math.toRadians(270.00)))
+                .splineTo(new Vector2d(-50.8, -39.27), Math.toRadians(90.00))
                 .build();
 
         TrajectorySequence tocubes = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -37.70, Math.toRadians(270.00)))
@@ -175,19 +180,27 @@ public class AutoRedLeft extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        drive.setPoseEstimate(towall.start());
+        //drive.setPoseEstimate(towall.start());
 
-        drive.followTrajectorySequence(towall);
+        setarmheight(80, -0.6);
+        //drive.followTrajectorySequence(towall);
 
-        RaiseArm(80, telemetry);
-        servospate.setPosition(0);
-        setarmheight(29, 0.4);
+        while (sliderleft.isBusy() && sliderright.isBusy() && !isStopRequested()) {
+            telemetry.addData("Sliderleft: ", sliderleft.getCurrentPosition());
+            telemetry.addData("Sliderright: ", sliderright.getCurrentPosition());
+            telemetry.update();
+        }
+        servobara.setPosition(0.4);
 
-        drive.followTrajectorySequence(firstcube);
-        drive.followTrajectorySequence(secondcube);
-        drive.followTrajectorySequence(thirdcube);
+        sleep(2000);
+        setarmheight(29, 0.6);
+        while (sliderleft.isBusy() && sliderright.isBusy() && !isStopRequested()) {
+            telemetry.addData("Sliderleft: ", sliderleft.getCurrentPosition());
+            telemetry.addData("Sliderright: ", sliderright.getCurrentPosition());
+            telemetry.update();
+        }
 
-        RaiseArm(45, telemetry);
+        //drive.followTrajectorySequence(firstintake);
 
         /*RaiseArm(78, telemetry);
         sleep(500);

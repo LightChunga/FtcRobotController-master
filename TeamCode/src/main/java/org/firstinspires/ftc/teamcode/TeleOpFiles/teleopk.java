@@ -180,12 +180,12 @@ public class teleopk extends LinearOpMode {
                 actuator.setPower(0);
 
             if(up>0 && down == 0) {
-                sliderleft.setPower(0.8);
-                sliderright.setPower(0.8);
+                sliderleft.setPower(0.5);
+                sliderright.setPower(0.5);
             }
             else if (down < 0 && up == 0) {
-                sliderleft.setPower(-0.9);
-                sliderright.setPower(-0.9);
+                sliderleft.setPower(-0.7);
+                sliderright.setPower(-0.7);
             }
             else {
                 sliderleft.setPower(0);
@@ -193,6 +193,7 @@ public class teleopk extends LinearOpMode {
             }
 
             telemetry.addData("servospate: ", servospate.getPosition());
+            telemetry.addData("Pivot pos: ", actuator.getCurrentPosition());
             telemetry.addData("bclaw: ", bclaw.getPosition());
             telemetry.addData("claw: ", claw.getPosition());
             telemetry.addData("claw2: ", claw2.getPosition());
