@@ -129,7 +129,7 @@ public class BlueLeft extends LinearOpMode {
 
         //todo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24.00, 60.00, Math.toRadians(90.00)))
-                .lineToConstantHeading(new Vector2d(0., 38.1))
+                .lineToConstantHeading(new Vector2d(0., 37.4))
                 .build();
 
         TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(-43.75, 59.00, Math.toRadians(270.00)))
@@ -184,11 +184,12 @@ public class BlueLeft extends LinearOpMode {
         sliderright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        RaiseArm(30.5);
+        RaiseArm(31.4);
+        sleep(1000);
         servobara.setPosition(0);
         sleep(1000);
 
-        RaiseArm(32);
+        RaiseArm(35.2);
         drive.followTrajectorySequence(towallcube);
         RaiseArm(75);
         drive.followTrajectorySequence(closer);

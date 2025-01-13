@@ -121,7 +121,7 @@ public class RedRight extends LinearOpMode {
 
         //Todo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(24.00, -60.00, Math.toRadians(270.00)))
-                .lineToConstantHeading(new Vector2d(0.00, -38.10))
+                .lineToConstantHeading(new Vector2d(0.00, -37.6))
                 .build();
 
         TrajectorySequence towallcube = drive.trajectorySequenceBuilder(new Pose2d(43.75, -59.00, Math.toRadians(90.00)))
@@ -142,11 +142,13 @@ public class RedRight extends LinearOpMode {
                 .splineTo(new Vector2d(34.78, -34.78), Math.toRadians(90.00))
                 .splineTo(new Vector2d(46.39, -8.51), Math.toRadians(0.00))
                 .lineToConstantHeading(new Vector2d(49.43, -56.56))
-                .splineToLinearHeading(new Pose2d(55.24, -46.66, Math.toRadians(90.00)), Math.toRadians(90.00))
-                .waitSeconds(2)
+                .splineToLinearHeading(new Pose2d(58.27, -40.72, Math.toRadians(90.00)), Math.toRadians(90.00))
+                .waitSeconds(3)
                 .splineToConstantHeading(new Vector2d(44.28, -49.96), Math.toRadians(270.00))
-                .lineToConstantHeading(new Vector2d(43.75, -59.3))
+                .lineToConstantHeading(new Vector2d(43.75, -59.30))
                 .build();
+
+
 
         TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(0.00, -33.00, Math.toRadians(270.00)))
                 .splineTo(new Vector2d(47.75, -55.00), Math.toRadians(0.00))
@@ -178,11 +180,12 @@ public class RedRight extends LinearOpMode {
         sliderright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        RaiseArm(30.5);
+        RaiseArm(31.4);
+        sleep(1000);
         servobara.setPosition(0);
         sleep(1000);
 
-        RaiseArm(32);
+        RaiseArm(3);
         drive.followTrajectorySequence(towallcube);
         RaiseArm(75);
         drive.followTrajectorySequence(closer);
