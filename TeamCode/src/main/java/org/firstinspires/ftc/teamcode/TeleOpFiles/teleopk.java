@@ -197,6 +197,7 @@ public class teleopk extends LinearOpMode {
             telemetry.addData("bclaw: ", bclaw.getPosition());
             telemetry.addData("claw: ", claw.getPosition());
             telemetry.addData("claw2: ", claw2.getPosition());
+            telemetry.addData("servobk: ", servobk.getPosition());
             telemetry.addData("left slide pts: ", sliderleft.getCurrentPosition());
             telemetry.addData("right slide pts: ", sliderright.getCurrentPosition());
             telemetry.update();

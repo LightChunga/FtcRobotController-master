@@ -18,18 +18,18 @@ import org.firstinspires.ftc.teamcode.Autonomous.New.Util.Utils;
 
 @Autonomous
 public class AutoRedLeft extends LinearOpMode {
-    ServoImplEx servospate = null;
-    ServoImplEx clawrot = null;
-    ServoImplEx claw_arm = null;
+    ServoImplEx bclaw = null;
     ServoImplEx claw = null;
+    ServoImplEx claw2 = null;
     ServoImplEx servobk = null;
+    ServoImplEx servospate = null;
     ServoImplEx servobara = null;
     DcMotorEx sliderleft = null;
     DcMotorEx sliderright = null;
     DcMotorEx actuator = null;
 
     //ToDo: tune this later
-    final double pcm = 31;
+    final double pcm = 71;
     final double rp = Math.sqrt(6) - Math.sqrt(2);
     final double L0 = 29;
     final double pivcm = 7.7611;
@@ -115,35 +115,51 @@ public class AutoRedLeft extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        servospate = hardwareMap.get(ServoImplEx.class, "claw2");
+        claw = hardwareMap.get(ServoImplEx.class, "claw"); //hook
+        bclaw = hardwareMap.get(ServoImplEx.class, "bclaw");
+        claw2 = hardwareMap.get(ServoImplEx.class, "claw2");
         servobk = hardwareMap.get(ServoImplEx.class, "servobk");
-
-        clawrot = hardwareMap.get(ServoImplEx.class, "servospate");
-        claw_arm = hardwareMap.get(ServoImplEx.class, "bclaw");
-        claw = hardwareMap.get(ServoImplEx.class, "claw");
+        servospate = hardwareMap.get(ServoImplEx.class, "servospate");
+        servobara = hardwareMap.get(ServoImplEx.class, "servo_bara");
 
         sliderleft = hardwareMap.get(DcMotorEx.class, "SliderLeft");
         sliderright = hardwareMap.get(DcMotorEx.class, "SliderRight");
         actuator = hardwareMap.get(DcMotorEx.class, "Pivot");
-        servobara = hardwareMap.get(ServoImplEx.class, "servo_bara");
+
 
         sliderleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sliderright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
         sliderleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         sliderleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         sliderright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        servobara.setPosition(0);
+        claw2.setPosition(0.45);//gheara spate inchis
+        servobk.setPosition(0.1);//poz gheara spate transfer
 
         //ToDo
         TrajectorySequence towall = drive.trajectorySequenceBuilder(new Pose2d(-24, -60.00, Math.toRadians(270.00)))
                 .lineToConstantHeading(new Vector2d(-8, -37.9))
                 .build();
 
+        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-24.00, -60.00, Math.toRadians(0.00)))
+                .splineToLinearHeading(new Pose2d(-45.73, -45.34, Math.toRadians(45.00)), Math.toRadians(225.00))
+                .build();
+
+        TrajectorySequence closer = drive.trajectorySequenceBuilder(new Pose2d(-45.73, -45.34, Math.toRadians(45.00)))
+                .lineToConstantHeading(new Vector2d(-51.15, -50.62))
+                .build();
+
+        TrajectorySequence further = drive.trajectorySequenceBuilder(new Pose2d(-51.15, -50.62, Math.toRadians(45.00)))
+                .splineTo(new Vector2d(-48.11, -46.66), Math.toRadians(48.79))
+                .build();
+
+        TrajectorySequence fcube = drive.trajectorySequenceBuilder(new Pose2d(-48.11, -46.66, Math.toRadians(48.79)))
+                .splineTo(new Vector2d(-49.30, -40.45), Math.toRadians(90.00))
+                .build();
+
         TrajectorySequence firstintake = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -38.10, Math.toRadians(270.00)))
-                .splineTo(new Vector2d(-50.8, -39.27), Math.toRadians(90.00))
+                .splineTo(new Vector2d(-51, -40.85), Math.toRadians(90.00))
                 .build();
 
         TrajectorySequence tocubes = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -37.70, Math.toRadians(270.00)))
@@ -152,12 +168,6 @@ public class AutoRedLeft extends LinearOpMode {
 
         TrajectorySequence nfirstcube = drive.trajectorySequenceBuilder(new Pose2d(-48.31, -43.98, Math.toRadians(90.00)))
                 .lineToConstantHeading(new Vector2d(-58.28, -43.84))
-                .build();
-
-        TrajectorySequence firstcube = drive.trajectorySequenceBuilder(new Pose2d(-8.00, -37.7, Math.toRadians(270.00)))
-                .splineTo(new Vector2d(-37.77, -40.80), Math.toRadians(90.00))
-                .splineTo(new Vector2d(-47.45, -9.75), Math.toRadians(180.00))
-                .lineTo(new Vector2d(-48, -60))
                 .build();
 
         TrajectorySequence secondcube = drive.trajectorySequenceBuilder(new Pose2d(-48.00, -60.00, Math.toRadians(180.00)))
@@ -180,66 +190,39 @@ public class AutoRedLeft extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        //drive.setPoseEstimate(towall.start());
+        drive.setPoseEstimate(firstcube.start());
 
-        RaiseArm(80, telemetry);
-        //drive.followTrajectorySequence(towall);
-
-        servobara.setPosition(0.4);
-
-        sleep(2000);
-        LowerArm(29, telemetry);
-        sleep(2000);
-
-        //drive.followTrajectorySequence(firstintake);
-
-        /*RaiseArm(78, telemetry);
-        sleep(500);
-        servospate.setPosition(0);
-        servobk.setPosition(0);
-        setarmheight(29, -0.4);
-        drive.followTrajectorySequence(tocubes);
-
-        pivot(17, 0.5);
-
-        while (actuator.isBusy()) {
-            telemetry.addData("Current Encoder Pos(right): ", -sliderright.getCurrentPosition());
-            telemetry.addData("Current Encoder Pos(left): ", -sliderleft.getCurrentPosition());
-            telemetry.addData("pivot pos: ", actuator.getCurrentPosition());
-            telemetry.update();
-        }
-
-        //todo: future project
-        /*servobk.setPosition(0.1);
-        servospate.setPosition(0);
-
-        claw.setPosition(0);
-        claw_arm.setPosition(0.02); //0.7; bclaw
-        sleep(1000);
-        claw.setPosition(0.35);// 0; claw
-        sleep(1000);
-
-        //servo spate --- claw2
-        claw_arm.setPosition(0.7); //0.7
-        clawrot.setPosition(0.1);
-        sleep(1000);
-        claw.setPosition(0);
-        sleep(1000);
-        servospate.setPosition(0.45);
-        clawrot.setPosition(0.22);
-        servobk.setPosition(0.7);
-        pivot(0.5, -0.5);
-
-        RaiseArm(105, telemetry);
+        setarmheight(109, 0.999);
+        drive.followTrajectorySequence(firstcube);
         servobk.setPosition(0.6);
+        while (sliderleft.isBusy() && sliderright.isBusy()) {}
+        drive.followTrajectorySequence(closer);
+        claw2.setPosition(0);
+        servobk.setPosition(0.8);
+        drive.followTrajectorySequence(further);
+        setarmheight(29, -0.999);
+        sleep(2000);
+        drive.followTrajectorySequence(fcube);
+        while (sliderleft.isBusy() && sliderright.isBusy()) {}
+        sliderleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sliderright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        pivot(8, 0.999);
+        while (actuator.isBusy()) {}
+        bclaw.setPosition(0.02);//preluare
+        servospate.setPosition(0.18);//poz preluare
         sleep(500);
+        claw.setPosition(0.35);
+        sleep(500);
+        bclaw.setPosition(0.7);//transfer
+        claw2.setPosition(0.0);//gheara spate deschis
+        servospate.setPosition(0.02); //pozitie transfer
 
-        drive.turn(Math.toRadians(-50));
-        servospate.setPosition(0);
+        servobk.setPosition(0.1);//poz gheara spate transfer
 
-        drive.turn(Math.toRadians(50));
-        setarmheight(29, -0.4);
+        pivot(0.1, -0.999);
+        while (actuator.isBusy()) {}
 
-        //servospate.setPosition();*/
+        claw2.setPosition(0.45);
     }
 }
